@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>poetry archive</title>
+    <title>corpus poetica</title>
     <style>
         * {
             margin: 0;
@@ -12,26 +12,27 @@
         }
         
         body {
-            background-color: #f8f5f0;
-            color: #2d2424;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
             font-family: 'Courier New', monospace;
-            line-height: 1.6;
+            line-height: 1.7;
             min-height: 100vh;
+            letter-spacing: 0.5px;
         }
         
         .container {
             display: grid;
-            grid-template-columns: 250px 1fr;
-            max-width: 1200px;
+            grid-template-columns: 300px 1fr;
+            max-width: 1400px;
             margin: 0 auto;
             min-height: 100vh;
         }
         
-        /* Sidebar */
+        /* Sidebar - Darker */
         .sidebar {
-            background-color: #f0ebe1;
-            border-right: 1px solid #e0d9cd;
-            padding: 30px 20px;
+            background-color: #111;
+            border-right: 1px solid #222;
+            padding: 40px 25px;
             height: 100vh;
             position: sticky;
             top: 0;
@@ -39,87 +40,145 @@
         }
         
         .logo {
-            font-size: 1.2em;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #e0d9cd;
-            letter-spacing: 1px;
-            color: #5d4037;
+            font-size: 1.4em;
+            margin-bottom: 50px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #333;
+            letter-spacing: 2px;
+            color: #fff;
+            font-weight: normal;
         }
         
-        .nav-title {
-            font-size: 0.9em;
-            color: #8b7d6b;
-            margin: 30px 0 10px;
+        /* Triad Navigation */
+        .triad-nav {
+            margin-bottom: 50px;
+        }
+        
+        .triad-title {
+            font-size: 0.8em;
+            color: #888;
+            margin-bottom: 15px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
         
+        .triad-item {
+            padding: 18px 20px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+            font-size: 1em;
+            background-color: #1a1a1a;
+        }
+        
+        .triad-item:hover {
+            background-color: #222;
+            border-left-color: #666;
+        }
+        
+        .triad-item.active {
+            background-color: #222;
+            border-left-color: #fff;
+            color: #fff;
+        }
+        
+        .triad-item .symbol {
+            margin-right: 10px;
+            opacity: 0.7;
+        }
+        
+        /* Poem List */
         .poem-list {
             list-style: none;
         }
         
         .poem-item {
-            padding: 12px 15px;
-            margin-bottom: 5px;
+            padding: 14px 20px;
+            margin-bottom: 6px;
             cursor: pointer;
             border-left: 2px solid transparent;
             transition: all 0.2s;
             font-size: 0.95em;
+            opacity: 0.8;
         }
         
         .poem-item:hover {
-            background-color: #e8e0d5;
-            border-left-color: #bcaaa4;
+            background-color: #1a1a1a;
+            opacity: 1;
+            border-left-color: #555;
         }
         
         .poem-item.active {
-            background-color: #e8e0d5;
-            border-left-color: #5d4037;
-            font-weight: bold;
+            background-color: #222;
+            opacity: 1;
+            border-left-color: #fff;
         }
         
         .poem-meta {
             font-size: 0.8em;
-            color: #8b7d6b;
-            margin-top: 4px;
-            display: flex;
-            gap: 10px;
+            color: #777;
+            margin-top: 8px;
+            font-style: italic;
         }
         
-        .tag {
-            background-color: #e0d9cd;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 0.75em;
-        }
-        
-        /* Main content */
+        /* Main Content - Minimal Black */
         .main {
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
+            padding: 50px;
+            background-color: #0a0a0a;
         }
         
         .typewriter-container {
-            flex: 1;
             max-width: 700px;
             margin: 0 auto;
-            width: 100%;
         }
         
-        .typewriter {
-            border-left: 2px solid #8b7d6b;
-            padding-left: 25px;
-            min-height: 300px;
+        /* Header */
+        .poem-header {
             margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #222;
+        }
+        
+        .triad-indicator {
+            display: inline-block;
+            font-size: 0.75em;
+            background-color: #222;
+            padding: 4px 12px;
+            border-radius: 2px;
+            margin-bottom: 15px;
+            color: #aaa;
+            letter-spacing: 1px;
+        }
+        
+        .poem-title {
+            font-size: 2.2em;
+            color: #fff;
+            margin-bottom: 10px;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+        
+        .poem-date {
+            font-size: 0.9em;
+            color: #777;
+            font-style: italic;
+        }
+        
+        /* Typewriter Area */
+        .typewriter {
+            min-height: 400px;
+            margin-bottom: 50px;
+            padding-left: 20px;
+            border-left: 1px solid #333;
         }
         
         .line {
-            margin-bottom: 1.2em;
+            margin-bottom: 1.8em;
             opacity: 0;
             transform: translateY(10px);
             animation: fadeInUp 0.5s forwards;
+            color: #ccc;
         }
         
         @keyframes fadeInUp {
@@ -132,9 +191,9 @@
         .cursor {
             display: inline-block;
             width: 2px;
-            height: 1.2em;
-            background-color: #2d2424;
-            margin-left: 2px;
+            height: 1.4em;
+            background-color: #fff;
+            margin-left: 4px;
             animation: blink 1s infinite;
             vertical-align: middle;
         }
@@ -144,86 +203,67 @@
             51%, 100% { opacity: 0; }
         }
         
-        /* Controls */
+        /* Controls - Minimal */
         .controls {
             display: flex;
             gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #e0d9cd;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #222;
         }
         
         .btn {
             background: transparent;
-            border: 1px solid #8b7d6b;
-            padding: 8px 16px;
+            border: 1px solid #333;
+            padding: 10px 20px;
             font-family: 'Courier New', monospace;
             font-size: 0.9em;
-            color: #5d4037;
+            color: #ccc;
             cursor: pointer;
-            transition: all 0.2s;
-            min-width: 100px;
+            transition: all 0.3s;
+            min-width: 120px;
+            letter-spacing: 1px;
         }
         
         .btn:hover {
-            background-color: #e8dfd6;
+            background-color: #222;
+            border-color: #555;
+            color: #fff;
         }
         
         .btn.active {
-            background-color: #5d4037;
-            color: #f8f5f0;
-            border-color: #5d4037;
+            background-color: #333;
+            border-color: #666;
+            color: #fff;
         }
         
-        /* Poem info */
-        .poem-header {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #e0d9cd;
-        }
-        
-        .poem-title {
-            font-size: 1.8em;
-            color: #2d2424;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-        
-        .poem-date {
-            font-size: 0.9em;
-            color: #8b7d6b;
-            margin-bottom: 15px;
-        }
-        
-        .poem-tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        
-        /* Stats */
+        /* Stats - Subtle */
         .stats {
-            background-color: #f0ebe1;
-            padding: 15px;
-            margin-top: 30px;
-            border-radius: 3px;
-            font-size: 0.9em;
-            color: #5d4037;
+            background-color: #111;
+            padding: 20px;
+            margin-top: 50px;
+            border-radius: 2px;
+            font-size: 0.85em;
+            color: #888;
+            border: 1px solid #222;
         }
         
         .stats-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #222;
         }
         
         .stats-item:last-child {
             margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
         }
         
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .container {
                 grid-template-columns: 1fr;
             }
@@ -232,57 +272,62 @@
                 height: auto;
                 position: static;
                 border-right: none;
-                border-bottom: 1px solid #e0d9cd;
+                border-bottom: 1px solid #222;
             }
             
             .main {
-                padding: 20px;
-            }
-            
-            .typewriter {
-                padding-left: 15px;
-                min-height: 200px;
+                padding: 30px 20px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar with poem list -->
+        <!-- Sidebar with Triad Navigation -->
         <div class="sidebar">
-            <div class="logo">poetry archive</div>
+            <div class="logo">CORPUS POETICA</div>
             
-            <div class="nav-title">collection</div>
+            <div class="triad-nav">
+                <div class="triad-title">THE TRIAD</div>
+                <div class="triad-item active" data-triad="flesh">
+                    <span class="symbol">⚙</span>FLESH
+                </div>
+                <div class="triad-item" data-triad="soul">
+                    <span class="symbol">☁</span>SOUL
+                </div>
+                <div class="triad-item" data-triad="spirit">
+                    <span class="symbol">⚡</span>SPIRIT
+                </div>
+            </div>
+            
+            <div class="triad-title" id="triadTitle">FLESH POEMS</div>
             <ul class="poem-list" id="poemList">
-                <!-- Poem list will be generated here -->
+                <!-- Poems will be loaded here -->
             </ul>
             
-            <div class="nav-title" style="margin-top: 40px;">stats</div>
             <div class="stats">
                 <div class="stats-item">
-                    <span>total poems:</span>
-                    <span id="totalPoems">0</span>
+                    <span>poems in triad:</span>
+                    <span id="triadCount">4</span>
                 </div>
                 <div class="stats-item">
                     <span>total lines:</span>
-                    <span id="totalLines">0</span>
+                    <span id="totalLines">48</span>
                 </div>
                 <div class="stats-item">
-                    <span>last updated:</span>
-                    <span>today</span>
+                    <span>last entry:</span>
+                    <span>tonight</span>
                 </div>
             </div>
         </div>
         
-        <!-- Main content area -->
+        <!-- Main Typewriter Area -->
         <div class="main">
             <div class="typewriter-container">
                 <div class="poem-header">
-                    <h1 class="poem-title" id="currentTitle">morning coffee</h1>
-                    <div class="poem-date" id="currentDate">october 2023</div>
-                    <div class="poem-tags" id="currentTags">
-                        <!-- Tags will be inserted here -->
-                    </div>
+                    <div class="triad-indicator" id="triadIndicator">FLESH</div>
+                    <h1 class="poem-title" id="currentTitle">Skin Memory</h1>
+                    <div class="poem-date" id="currentDate">December 2023</div>
                 </div>
                 
                 <div class="typewriter" id="typewriter">
@@ -290,164 +335,245 @@
                 </div>
                 
                 <div class="controls">
-                    <button class="btn" id="prevBtn">← previous</button>
-                    <button class="btn" id="nextBtn">next →</button>
-                    <button class="btn" id="playBtn">▶ play</button>
-                    <button class="btn" id="pauseBtn">⏸ pause</button>
-                    <button class="btn" id="speedBtn">speed: normal</button>
+                    <button class="btn" id="prevBtn">← PREV</button>
+                    <button class="btn" id="nextBtn">NEXT →</button>
+                    <button class="btn" id="playBtn">▶ PLAY</button>
+                    <button class="btn" id="pauseBtn">⏸ PAUSE</button>
+                    <button class="btn" id="speedBtn">NORMAL</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        const poems = [
-            {
-                id: 1,
-                title: "morning coffee",
-                lines: [
-                    "steam rises",
-                    "from the dark surface",
-                    "like a prayer",
-                    "in the quiet kitchen",
-                    "",
-                    "the first sip",
-                    "burns then comforts",
-                    "a familiar ritual",
-                    "waking the senses",
-                    "",
-                    "sunlight through the window",
-                    "catches in the swirl",
-                    "of cream"
-                ],
-                date: "october 2023",
-                tags: ["ritual", "awakening", "morning"]
-            },
-            {
-                id: 2,
-                title: "late night thoughts",
-                lines: [
-                    "the clock ticks",
-                    "in the silent apartment",
-                    "thoughts circle",
-                    "like moths around a lamp",
-                    "",
-                    "memories surface",
-                    "then sink again",
-                    "in the quiet dark",
-                    "",
-                    "somewhere a car passes",
-                    "headlights sweeping walls",
-                    "then gone"
-                ],
-                date: "november 2023",
-                tags: ["insomnia", "memory", "night"]
-            },
-            {
-                id: 3,
-                title: "train window",
-                lines: [
-                    "raindrops race",
-                    "down the glass",
-                    "each taking",
-                    "a different path",
-                    "",
-                    "the world outside",
-                    "blurs into watercolor",
-                    "stations pass",
-                    "without names",
-                    "",
-                    "movement without motion",
-                    "a paradox of travel",
-                    "going somewhere",
-                    "while sitting still"
-                ],
-                date: "september 2023",
-                tags: ["travel", "observation", "rain"]
-            },
-            {
-                id: 4,
-                title: "empty notebook",
-                lines: [
-                    "blank pages",
-                    "full of potential",
-                    "that frightens me",
-                    "",
-                    "the first mark",
-                    "always the hardest",
-                    "a commitment",
-                    "to imperfection",
-                    "",
-                    "so i wait",
-                    "for the right words",
-                    "that never come",
-                    "while the empty pages",
-                    "whisper possibilities"
-                ],
-                date: "december 2023",
-                tags: ["creation", "doubt", "writing"]
-            },
-            {
-                id: 5,
-                title: "sunday rain",
-                lines: [
-                    "rain taps softly",
-                    "on the windowpane",
-                    "a steady rhythm",
-                    "for lazy hours",
-                    "",
-                    "the world outside",
-                    "washed clean and gray",
-                    "while inside",
-                    "the kettle sings",
-                    "",
-                    "nothing to do",
-                    "but watch the drops",
-                    "trace their paths",
-                    "and disappear"
-                ],
-                date: "january 2024",
-                tags: ["rain", "quiet", "sunday"]
-            },
-            {
-                id: 6,
-                title: "bookstore hours",
-                lines: [
-                    "dust motes dance",
-                    "in afternoon light",
-                    "between tall shelves",
-                    "of silent stories",
-                    "",
-                    "fingers trace",
-                    "along spines",
-                    "each one a world",
-                    "waiting to open",
-                    "",
-                    "the smell of paper",
-                    "and quiet thoughts",
-                    "time slows here",
-                    "among the pages"
-                ],
-                date: "february 2024",
-                tags: ["books", "quiet", "time"]
-            }
-        ];
+        // Poems organized by triad: FLESH, SOUL, SPIRIT
+        const poems = {
+            flesh: [
+                {
+                    id: 1,
+                    title: "Skin Memory",
+                    lines: [
+                        "the body keeps score",
+                        "in scars and stretchmarks",
+                        "silver lines on pale canvas",
+                        "stories written in flesh",
+                        "",
+                        "muscles remember tension",
+                        "bones recall cold floors",
+                        "hands remember touch",
+                        "long after touch is gone",
+                        "",
+                        "this temple of meat and blood",
+                        "this temporary housing",
+                        "decaying even as it breathes",
+                        "beautiful in its ruin"
+                    ],
+                    date: "December 2023",
+                    theme: "mortality"
+                },
+                {
+                    id: 2,
+                    title: "Bone Cathedral",
+                    lines: [
+                        "these ribs form arches",
+                        "holding up fragile skin",
+                        "a cathedral of calcium",
+                        "hollow and resonant",
+                        "",
+                        "kneecaps like river stones",
+                        "smooth from constant prayer",
+                        "vertebrae a rosary",
+                        "counted in sleepless nights",
+                        "",
+                        "oh this architecture of ache",
+                        "this scaffolding of pain",
+                        "holding up consciousness",
+                        "until the final collapse"
+                    ],
+                    date: "November 2023",
+                    theme: "anatomy"
+                },
+                {
+                    id: 3,
+                    title: "Heart's Machinery",
+                    lines: [
+                        "pump and valve",
+                        "steady rhythm",
+                        "an engine of blood",
+                        "behind breastbone",
+                        "",
+                        "it doesn't feel",
+                        "only pushes",
+                        "fluid through tubes",
+                        "mechanical duty",
+                        "",
+                        "yet we call it love",
+                        "this hydraulic system",
+                        "this wet clockwork",
+                        "ticking toward silence"
+                    ],
+                    date: "January 2024",
+                    theme: "mechanical"
+                }
+            ],
+            soul: [
+                {
+                    id: 4,
+                    title: "Ghost in the Machine",
+                    lines: [
+                        "something moves within",
+                        "behind the eyes",
+                        "in the spaces between thoughts",
+                        "a tenant in flesh",
+                        "",
+                        "not the brain's electricity",
+                        "nor the heart's rhythm",
+                        "but a quieter presence",
+                        "watching itself exist",
+                        "",
+                        "the witness to suffering",
+                        "the feeler of feelings",
+                        "trapped in biology",
+                        "but not of it"
+                    ],
+                    date: "February 2024",
+                    theme: "consciousness"
+                },
+                {
+                    id: 5,
+                    title: "Melancholy's Weight",
+                    lines: [
+                        "sadness has mass",
+                        "it fills the chest cavity",
+                        "presses on lungs",
+                        "makes breathing work",
+                        "",
+                        "not a mood but a gravity",
+                        "pulling everything downward",
+                        "thoughts like lead",
+                        "emotions like stone",
+                        "",
+                        "yet in this heaviness",
+                        "there's a strange comfort",
+                        "the certainty of descent",
+                        "in a falling world"
+                    ],
+                    date: "March 2024",
+                    theme: "melancholy"
+                },
+                {
+                    id: 6,
+                    title: "Echo Chamber",
+                    lines: [
+                        "memory's gallery",
+                        "endless hallways",
+                        "of what was said",
+                        "and what was not",
+                        "",
+                        "voices from years past",
+                        "bouncing off bone walls",
+                        "never fading completely",
+                        "just growing softer",
+                        "",
+                        "the soul is haunted",
+                        "by its own history",
+                        "a ghost to itself",
+                        "in its own house"
+                    ],
+                    date: "October 2023",
+                    theme: "memory"
+                }
+            ],
+            spirit: [
+                {
+                    id: 7,
+                    title: "Holy Sparks",
+                    lines: [
+                        "sometimes light breaks through",
+                        "cracks in the mundane",
+                        "illuminating dust motes",
+                        "making them holy",
+                        "",
+                        "a moment of connection",
+                        "that feels like remembering",
+                        "something forgotten",
+                        "from before the world",
+                        "",
+                        "these glimpses of something",
+                        "larger than self",
+                        "brief and beautiful",
+                        "and then gone"
+                    ],
+                    date: "April 2024",
+                    theme: "transcendence"
+                },
+                {
+                    id: 8,
+                    title: "Prayer Without Words",
+                    lines: [
+                        "not kneeling or speaking",
+                        "but breathing and being",
+                        "an offering of attention",
+                        "to the present moment",
+                        "",
+                        "the silent communion",
+                        "with whatever listens",
+                        "in the spaces between",
+                        "heartbeats and thoughts",
+                        "",
+                        "this is my worship:",
+                        "staying awake",
+                        "to the miracle",
+                        "of existing at all"
+                    ],
+                    date: "May 2024",
+                    theme: "spirituality"
+                },
+                {
+                    id: 9,
+                    title: "Eternal Fragment",
+                    lines: [
+                        "a shard of forever",
+                        "trapped in time",
+                        "dressed in temporary",
+                        "flesh and thought",
+                        "",
+                        "this part that remembers",
+                        "it was never born",
+                        "and will never die",
+                        "only change form",
+                        "",
+                        "the eternal passenger",
+                        "in the mortal vehicle",
+                        "watching the scenery",
+                        "until the ride ends"
+                    ],
+                    date: "June 2024",
+                    theme: "eternity"
+                }
+            ]
+        };
 
-        let currentPoem = 0;
+        // State
+        let currentTriad = 'flesh';
+        let currentPoemIndex = 0;
         let currentLine = 0;
         let isTyping = false;
         let isPlaying = false;
-        let typingSpeed = 50; // ms per character
+        let typingSpeed = 60;
         let typeTimeout;
 
+        // DOM Elements
         const typewriter = document.getElementById('typewriter');
         const poemList = document.getElementById('poemList');
+        const triadTitle = document.getElementById('triadTitle');
+        const triadIndicator = document.getElementById('triadIndicator');
         const currentTitle = document.getElementById('currentTitle');
         const currentDate = document.getElementById('currentDate');
-        const currentTags = document.getElementById('currentTags');
-        const totalPoems = document.getElementById('totalPoems');
+        const triadCount = document.getElementById('triadCount');
         const totalLines = document.getElementById('totalLines');
         
+        const triadItems = document.querySelectorAll('.triad-item');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const playBtn = document.getElementById('playBtn');
@@ -458,32 +584,60 @@
         function init() {
             updateStats();
             renderPoemList();
-            loadPoem(currentPoem);
+            loadPoem(currentTriad, currentPoemIndex);
+            activateTriad('flesh');
         }
 
+        // Triad Navigation
+        function activateTriad(triad) {
+            currentTriad = triad;
+            currentPoemIndex = 0;
+            
+            // Update triad items
+            triadItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.triad === triad) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Update UI
+            triadTitle.textContent = `${triad.toUpperCase()} POEMS`;
+            triadIndicator.textContent = triad.toUpperCase();
+            
+            // Reload poems
+            updateStats();
+            renderPoemList();
+            loadPoem(currentTriad, currentPoemIndex);
+        }
+
+        // Update statistics
         function updateStats() {
-            totalPoems.textContent = poems.length;
-            const total = poems.reduce((sum, poem) => sum + poem.lines.length, 0);
+            const currentPoems = poems[currentTriad];
+            triadCount.textContent = currentPoems.length;
+            
+            // Calculate total lines in current triad
+            const total = currentPoems.reduce((sum, poem) => sum + poem.lines.length, 0);
             totalLines.textContent = total;
         }
 
+        // Render poem list for current triad
         function renderPoemList() {
             poemList.innerHTML = '';
-            poems.forEach((poem, index) => {
+            const currentPoems = poems[currentTriad];
+            
+            currentPoems.forEach((poem, index) => {
                 const li = document.createElement('li');
-                li.className = `poem-item ${index === currentPoem ? 'active' : ''}`;
+                li.className = `poem-item ${index === currentPoemIndex ? 'active' : ''}`;
                 li.innerHTML = `
                     <div>${poem.title}</div>
-                    <div class="poem-meta">
-                        <span>${poem.date}</span>
-                        <span class="tag">${poem.tags[0]}</span>
-                    </div>
+                    <div class="poem-meta">${poem.theme}</div>
                 `;
                 li.addEventListener('click', () => {
                     if (isTyping) return;
-                    currentPoem = index;
+                    currentPoemIndex = index;
                     updateActivePoem();
-                    loadPoem(currentPoem);
+                    loadPoem(currentTriad, currentPoemIndex);
                 });
                 poemList.appendChild(li);
             });
@@ -491,25 +645,17 @@
 
         function updateActivePoem() {
             document.querySelectorAll('.poem-item').forEach((item, index) => {
-                item.classList.toggle('active', index === currentPoem);
+                item.classList.toggle('active', index === currentPoemIndex);
             });
         }
 
-        function loadPoem(index) {
-            const poem = poems[index];
+        // Load and type a poem
+        function loadPoem(triad, index) {
+            const poem = poems[triad][index];
             
             // Update header
             currentTitle.textContent = poem.title;
             currentDate.textContent = poem.date;
-            
-            // Update tags
-            currentTags.innerHTML = '';
-            poem.tags.forEach(tag => {
-                const span = document.createElement('span');
-                span.className = 'tag';
-                span.textContent = tag;
-                currentTags.appendChild(span);
-            });
             
             // Start typing
             startTyping();
@@ -532,18 +678,20 @@
         }
 
         function typeLine() {
-            if (currentLine >= poems[currentPoem].lines.length) {
+            const currentPoems = poems[currentTriad];
+            const poem = currentPoems[currentPoemIndex];
+            
+            if (currentLine >= poem.lines.length) {
                 isTyping = false;
                 if (isPlaying) {
-                    // Auto advance to next poem after delay
                     setTimeout(() => {
                         if (isPlaying) nextPoem();
-                    }, 2000);
+                    }, 2500);
                 }
                 return;
             }
 
-            const line = poems[currentPoem].lines[currentLine];
+            const line = poem.lines[currentLine];
             const lineElement = document.createElement('div');
             lineElement.className = 'line';
             typewriter.appendChild(lineElement);
@@ -559,37 +707,38 @@
                     typeTimeout = setTimeout(typeChar, typingSpeed);
                 } else {
                     currentLine++;
-                    // Delay between lines
-                    typeTimeout = setTimeout(typeLine, line === "" ? 300 : 800);
+                    typeTimeout = setTimeout(typeLine, line === "" ? 400 : 900);
                 }
             };
             
             typeChar();
         }
 
+        // Navigation
         function nextPoem() {
-            currentPoem = (currentPoem + 1) % poems.length;
+            const currentPoems = poems[currentTriad];
+            currentPoemIndex = (currentPoemIndex + 1) % currentPoems.length;
             updateActivePoem();
-            loadPoem(currentPoem);
+            loadPoem(currentTriad, currentPoemIndex);
         }
 
         function prevPoem() {
-            currentPoem = (currentPoem - 1 + poems.length) % poems.length;
+            const currentPoems = poems[currentTriad];
+            currentPoemIndex = (currentPoemIndex - 1 + currentPoems.length) % currentPoems.length;
             updateActivePoem();
-            loadPoem(currentPoem);
+            loadPoem(currentTriad, currentPoemIndex);
         }
 
+        // Controls
         function togglePlay() {
             isPlaying = !isPlaying;
             playBtn.classList.toggle('active', isPlaying);
             pauseBtn.classList.toggle('active', !isPlaying);
             
             if (isPlaying && !isTyping) {
-                // If finished typing, move to next poem
-                if (currentLine >= poems[currentPoem].lines.length) {
+                if (currentLine >= poems[currentTriad][currentPoemIndex].lines.length) {
                     nextPoem();
                 } else {
-                    // Resume typing current poem
                     isTyping = true;
                     typeLine();
                 }
@@ -604,19 +753,26 @@
 
         function cycleSpeed() {
             const speeds = [
-                {label: "slow", value: 80},
-                {label: "normal", value: 50},
-                {label: "fast", value: 30},
-                {label: "instant", value: 0}
+                {label: "SLOW", value: 80},
+                {label: "NORMAL", value: 60},
+                {label: "FAST", value: 40},
+                {label: "INSTANT", value: 0}
             ];
             
             const currentIndex = speeds.findIndex(s => s.value === typingSpeed);
             const nextIndex = (currentIndex + 1) % speeds.length;
             typingSpeed = speeds[nextIndex].value;
-            speedBtn.textContent = `speed: ${speeds[nextIndex].label}`;
+            speedBtn.textContent = speeds[nextIndex].label;
         }
 
-        // Event listeners
+        // Event Listeners
+        triadItems.forEach(item => {
+            item.addEventListener('click', () => {
+                pauseTyping();
+                activateTriad(item.dataset.triad);
+            });
+        });
+
         prevBtn.addEventListener('click', () => {
             pauseTyping();
             prevPoem();
@@ -644,6 +800,15 @@
                 togglePlay();
             } else if (e.key === 'Escape') {
                 pauseTyping();
+            } else if (e.key === '1') {
+                pauseTyping();
+                activateTriad('flesh');
+            } else if (e.key === '2') {
+                pauseTyping();
+                activateTriad('soul');
+            } else if (e.key === '3') {
+                pauseTyping();
+                activateTriad('spirit');
             }
         });
 
