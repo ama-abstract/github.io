@@ -12,12 +12,13 @@ header {
   margin-bottom: 3rem;
 }
 
-.poem {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  margin-bottom: 3rem;
 
-    .column {
+.gallery img {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+ .column {
     float: left;
     width: 33.33%;
     }
@@ -28,12 +29,3 @@ header {
     display: table;
     clear: both;
   }
-}
-
-
-.gallery img {
-  width: 100%;
-  margin-bottom: 2rem;
-}
-
-
