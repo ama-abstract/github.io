@@ -16,6 +16,18 @@ header {
   font-size: 1.1rem;
   line-height: 1.8;
   margin-bottom: 3rem;
+
+    .column {
+    float: left;
+    width: 33.33%;
+    }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 }
 
 
@@ -24,14 +36,4 @@ header {
   margin-bottom: 2rem;
 }
 
-.column {
-  float: left;
-  width: 33.33%;
-}
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
