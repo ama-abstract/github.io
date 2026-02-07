@@ -16,6 +16,7 @@ header {
 .column {
 float: left;
 width: 33.33%;
+padding: 40px;
 }
 
 /* Clear floats after the columns */
