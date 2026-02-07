@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>poetry.</title>
+    <title>poetry archive</title>
     <style>
         * {
             margin: 0;
@@ -12,24 +12,107 @@
         }
         
         body {
-            background-color: #f5f1e8;
-            color: #3c2f2f;
+            background-color: #f8f5f0;
+            color: #2d2424;
             font-family: 'Courier New', monospace;
             line-height: 1.6;
             min-height: 100vh;
-            padding: 20px;
         }
         
         .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background-color: #f0ebe1;
+            border-right: 1px solid #e0d9cd;
+            padding: 30px 20px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+        }
+        
+        .logo {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0d9cd;
+            letter-spacing: 1px;
+            color: #5d4037;
+        }
+        
+        .nav-title {
+            font-size: 0.9em;
+            color: #8b7d6b;
+            margin: 30px 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .poem-list {
+            list-style: none;
+        }
+        
+        .poem-item {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+            font-size: 0.95em;
+        }
+        
+        .poem-item:hover {
+            background-color: #e8e0d5;
+            border-left-color: #bcaaa4;
+        }
+        
+        .poem-item.active {
+            background-color: #e8e0d5;
+            border-left-color: #5d4037;
+            font-weight: bold;
+        }
+        
+        .poem-meta {
+            font-size: 0.8em;
+            color: #8b7d6b;
+            margin-top: 4px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .tag {
+            background-color: #e0d9cd;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.75em;
+        }
+        
+        /* Main content */
+        .main {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .typewriter-container {
+            flex: 1;
             max-width: 700px;
             margin: 0 auto;
-            padding: 40px 20px;
+            width: 100%;
         }
         
         .typewriter {
             border-left: 2px solid #8b7d6b;
-            padding-left: 20px;
+            padding-left: 25px;
             min-height: 300px;
+            margin-bottom: 40px;
         }
         
         .line {
@@ -46,18 +129,11 @@
             }
         }
         
-        .title {
-            font-size: 1.8em;
-            margin-bottom: 2em;
-            color: #5d4037;
-            letter-spacing: 1px;
-        }
-        
         .cursor {
             display: inline-block;
             width: 2px;
             height: 1.2em;
-            background-color: #3c2f2f;
+            background-color: #2d2424;
             margin-left: 2px;
             animation: blink 1s infinite;
             vertical-align: middle;
@@ -68,13 +144,14 @@
             51%, 100% { opacity: 0; }
         }
         
+        /* Controls */
         .controls {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #d7ccc8;
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0d9cd;
         }
         
         .btn {
@@ -86,74 +163,147 @@
             color: #5d4037;
             cursor: pointer;
             transition: all 0.2s;
+            min-width: 100px;
         }
         
         .btn:hover {
             background-color: #e8dfd6;
         }
         
-        .coffee-cup {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            font-size: 1.5em;
-            color: #6d4c41;
-            opacity: 0.3;
+        .btn.active {
+            background-color: #5d4037;
+            color: #f8f5f0;
+            border-color: #5d4037;
         }
         
-        .poem-info {
+        /* Poem info */
+        .poem-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0d9cd;
+        }
+        
+        .poem-title {
+            font-size: 1.8em;
+            color: #2d2424;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .poem-date {
             font-size: 0.9em;
             color: #8b7d6b;
+            margin-bottom: 15px;
+        }
+        
+        .poem-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        /* Stats */
+        .stats {
+            background-color: #f0ebe1;
+            padding: 15px;
             margin-top: 30px;
-            font-style: italic;
+            border-radius: 3px;
+            font-size: 0.9em;
+            color: #5d4037;
         }
         
-        .index {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            font-size: 0.8em;
-            color: #8b7d6b;
+        .stats-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
         }
         
-        @media (max-width: 600px) {
+        .stats-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
             .container {
-                padding: 20px 10px;
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                height: auto;
+                position: static;
+                border-right: none;
+                border-bottom: 1px solid #e0d9cd;
+            }
+            
+            .main {
+                padding: 20px;
             }
             
             .typewriter {
-                padding-left: 10px;
-            }
-            
-            .coffee-cup {
-                display: none;
+                padding-left: 15px;
+                min-height: 200px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="index">[ poetry index ]</div>
-    
     <div class="container">
-        <div class="typewriter" id="typewriter">
-            <!-- Content will be typed here -->
+        <!-- Sidebar with poem list -->
+        <div class="sidebar">
+            <div class="logo">poetry archive</div>
+            
+            <div class="nav-title">collection</div>
+            <ul class="poem-list" id="poemList">
+                <!-- Poem list will be generated here -->
+            </ul>
+            
+            <div class="nav-title" style="margin-top: 40px;">stats</div>
+            <div class="stats">
+                <div class="stats-item">
+                    <span>total poems:</span>
+                    <span id="totalPoems">0</span>
+                </div>
+                <div class="stats-item">
+                    <span>total lines:</span>
+                    <span id="totalLines">0</span>
+                </div>
+                <div class="stats-item">
+                    <span>last updated:</span>
+                    <span>today</span>
+                </div>
+            </div>
         </div>
         
-        <div class="controls">
-            <button class="btn" id="prevBtn">← previous</button>
-            <button class="btn" id="nextBtn">next →</button>
-            <button class="btn" id="autoBtn">auto type</button>
-            <button class="btn" id="clearBtn">clear</button>
+        <!-- Main content area -->
+        <div class="main">
+            <div class="typewriter-container">
+                <div class="poem-header">
+                    <h1 class="poem-title" id="currentTitle">morning coffee</h1>
+                    <div class="poem-date" id="currentDate">october 2023</div>
+                    <div class="poem-tags" id="currentTags">
+                        <!-- Tags will be inserted here -->
+                    </div>
+                </div>
+                
+                <div class="typewriter" id="typewriter">
+                    <!-- Poem will be typed here -->
+                </div>
+                
+                <div class="controls">
+                    <button class="btn" id="prevBtn">← previous</button>
+                    <button class="btn" id="nextBtn">next →</button>
+                    <button class="btn" id="playBtn">▶ play</button>
+                    <button class="btn" id="pauseBtn">⏸ pause</button>
+                    <button class="btn" id="speedBtn">speed: normal</button>
+                </div>
+            </div>
         </div>
-        
-        <div class="poem-info" id="poemInfo"></div>
     </div>
-    
-    <div class="coffee-cup">☕</div>
 
     <script>
         const poems = [
             {
+                id: 1,
                 title: "morning coffee",
                 lines: [
                     "steam rises",
@@ -171,9 +321,10 @@
                     "of cream"
                 ],
                 date: "october 2023",
-                tags: ["ritual", "awakening"]
+                tags: ["ritual", "awakening", "morning"]
             },
             {
+                id: 2,
                 title: "late night thoughts",
                 lines: [
                     "the clock ticks",
@@ -190,9 +341,10 @@
                     "then gone"
                 ],
                 date: "november 2023",
-                tags: ["insomnia", "memory"]
+                tags: ["insomnia", "memory", "night"]
             },
             {
+                id: 3,
                 title: "train window",
                 lines: [
                     "raindrops race",
@@ -211,9 +363,10 @@
                     "while sitting still"
                 ],
                 date: "september 2023",
-                tags: ["travel", "observation"]
+                tags: ["travel", "observation", "rain"]
             },
             {
+                id: 4,
                 title: "empty notebook",
                 lines: [
                     "blank pages",
@@ -232,136 +385,270 @@
                     "whisper possibilities"
                 ],
                 date: "december 2023",
-                tags: ["creation", "doubt"]
+                tags: ["creation", "doubt", "writing"]
+            },
+            {
+                id: 5,
+                title: "sunday rain",
+                lines: [
+                    "rain taps softly",
+                    "on the windowpane",
+                    "a steady rhythm",
+                    "for lazy hours",
+                    "",
+                    "the world outside",
+                    "washed clean and gray",
+                    "while inside",
+                    "the kettle sings",
+                    "",
+                    "nothing to do",
+                    "but watch the drops",
+                    "trace their paths",
+                    "and disappear"
+                ],
+                date: "january 2024",
+                tags: ["rain", "quiet", "sunday"]
+            },
+            {
+                id: 6,
+                title: "bookstore hours",
+                lines: [
+                    "dust motes dance",
+                    "in afternoon light",
+                    "between tall shelves",
+                    "of silent stories",
+                    "",
+                    "fingers trace",
+                    "along spines",
+                    "each one a world",
+                    "waiting to open",
+                    "",
+                    "the smell of paper",
+                    "and quiet thoughts",
+                    "time slows here",
+                    "among the pages"
+                ],
+                date: "february 2024",
+                tags: ["books", "quiet", "time"]
             }
         ];
 
         let currentPoem = 0;
         let currentLine = 0;
         let isTyping = false;
-        let autoMode = false;
-        let typeInterval;
+        let isPlaying = false;
+        let typingSpeed = 50; // ms per character
+        let typeTimeout;
 
         const typewriter = document.getElementById('typewriter');
-        const poemInfo = document.getElementById('poemInfo');
+        const poemList = document.getElementById('poemList');
+        const currentTitle = document.getElementById('currentTitle');
+        const currentDate = document.getElementById('currentDate');
+        const currentTags = document.getElementById('currentTags');
+        const totalPoems = document.getElementById('totalPoems');
+        const totalLines = document.getElementById('totalLines');
+        
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
-        const autoBtn = document.getElementById('autoBtn');
-        const clearBtn = document.getElementById('clearBtn');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const speedBtn = document.getElementById('speedBtn');
+
+        // Initialize
+        function init() {
+            updateStats();
+            renderPoemList();
+            loadPoem(currentPoem);
+        }
+
+        function updateStats() {
+            totalPoems.textContent = poems.length;
+            const total = poems.reduce((sum, poem) => sum + poem.lines.length, 0);
+            totalLines.textContent = total;
+        }
+
+        function renderPoemList() {
+            poemList.innerHTML = '';
+            poems.forEach((poem, index) => {
+                const li = document.createElement('li');
+                li.className = `poem-item ${index === currentPoem ? 'active' : ''}`;
+                li.innerHTML = `
+                    <div>${poem.title}</div>
+                    <div class="poem-meta">
+                        <span>${poem.date}</span>
+                        <span class="tag">${poem.tags[0]}</span>
+                    </div>
+                `;
+                li.addEventListener('click', () => {
+                    if (isTyping) return;
+                    currentPoem = index;
+                    updateActivePoem();
+                    loadPoem(currentPoem);
+                });
+                poemList.appendChild(li);
+            });
+        }
+
+        function updateActivePoem() {
+            document.querySelectorAll('.poem-item').forEach((item, index) => {
+                item.classList.toggle('active', index === currentPoem);
+            });
+        }
+
+        function loadPoem(index) {
+            const poem = poems[index];
+            
+            // Update header
+            currentTitle.textContent = poem.title;
+            currentDate.textContent = poem.date;
+            
+            // Update tags
+            currentTags.innerHTML = '';
+            poem.tags.forEach(tag => {
+                const span = document.createElement('span');
+                span.className = 'tag';
+                span.textContent = tag;
+                currentTags.appendChild(span);
+            });
+            
+            // Start typing
+            startTyping();
+        }
+
+        function startTyping() {
+            clearTypewriter();
+            currentLine = 0;
+            isTyping = true;
+            isPlaying = true;
+            playBtn.classList.add('active');
+            pauseBtn.classList.remove('active');
+            typeLine();
+        }
+
+        function clearTypewriter() {
+            typewriter.innerHTML = '';
+            clearTimeout(typeTimeout);
+            isTyping = false;
+        }
 
         function typeLine() {
             if (currentLine >= poems[currentPoem].lines.length) {
                 isTyping = false;
-                if (autoMode) {
-                    setTimeout(nextPoem, 2000);
+                if (isPlaying) {
+                    // Auto advance to next poem after delay
+                    setTimeout(() => {
+                        if (isPlaying) nextPoem();
+                    }, 2000);
                 }
                 return;
             }
 
-            isTyping = true;
             const line = poems[currentPoem].lines[currentLine];
-            
             const lineElement = document.createElement('div');
             lineElement.className = 'line';
-            
             typewriter.appendChild(lineElement);
-            
+
             let charIndex = 0;
+            
             const typeChar = () => {
+                if (!isPlaying || !isTyping) return;
+                
                 if (charIndex < line.length) {
                     lineElement.textContent += line.charAt(charIndex);
                     charIndex++;
-                    
-                    // Random typing speed for natural feel
-                    const speed = Math.random() * 30 + 40;
-                    setTimeout(typeChar, speed);
+                    typeTimeout = setTimeout(typeChar, typingSpeed);
                 } else {
                     currentLine++;
-                    setTimeout(typeLine, line === "" ? 300 : 800);
+                    // Delay between lines
+                    typeTimeout = setTimeout(typeLine, line === "" ? 300 : 800);
                 }
             };
             
             typeChar();
         }
 
-        function displayPoemInfo() {
-            const poem = poems[currentPoem];
-            poemInfo.textContent = `${poem.date} • ${poem.tags.join(', ')}`;
-        }
-
-        function startTyping() {
-            clearTypewriter();
-            currentLine = 0;
-            typeLine();
-            displayPoemInfo();
-        }
-
-        function clearTypewriter() {
-            typewriter.innerHTML = '';
-            isTyping = false;
-            clearInterval(typeInterval);
-        }
-
         function nextPoem() {
             currentPoem = (currentPoem + 1) % poems.length;
-            startTyping();
+            updateActivePoem();
+            loadPoem(currentPoem);
         }
 
         function prevPoem() {
             currentPoem = (currentPoem - 1 + poems.length) % poems.length;
-            startTyping();
+            updateActivePoem();
+            loadPoem(currentPoem);
         }
 
-        function toggleAutoMode() {
-            autoMode = !autoMode;
-            autoBtn.textContent = autoMode ? 'stop auto' : 'auto type';
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            playBtn.classList.toggle('active', isPlaying);
+            pauseBtn.classList.toggle('active', !isPlaying);
             
-            if (autoMode) {
-                if (!isTyping) {
-                    startTyping();
+            if (isPlaying && !isTyping) {
+                // If finished typing, move to next poem
+                if (currentLine >= poems[currentPoem].lines.length) {
+                    nextPoem();
+                } else {
+                    // Resume typing current poem
+                    isTyping = true;
+                    typeLine();
                 }
-            } else {
-                clearInterval(typeInterval);
             }
+        }
+
+        function pauseTyping() {
+            isPlaying = false;
+            playBtn.classList.remove('active');
+            pauseBtn.classList.add('active');
+        }
+
+        function cycleSpeed() {
+            const speeds = [
+                {label: "slow", value: 80},
+                {label: "normal", value: 50},
+                {label: "fast", value: 30},
+                {label: "instant", value: 0}
+            ];
+            
+            const currentIndex = speeds.findIndex(s => s.value === typingSpeed);
+            const nextIndex = (currentIndex + 1) % speeds.length;
+            typingSpeed = speeds[nextIndex].value;
+            speedBtn.textContent = `speed: ${speeds[nextIndex].label}`;
         }
 
         // Event listeners
         prevBtn.addEventListener('click', () => {
-            if (isTyping) return;
+            pauseTyping();
             prevPoem();
         });
 
         nextBtn.addEventListener('click', () => {
-            if (isTyping) return;
+            pauseTyping();
             nextPoem();
         });
 
-        autoBtn.addEventListener('click', toggleAutoMode);
+        playBtn.addEventListener('click', togglePlay);
+        pauseBtn.addEventListener('click', pauseTyping);
+        speedBtn.addEventListener('click', cycleSpeed);
 
-        clearBtn.addEventListener('click', () => {
-            clearTypewriter();
-            autoMode = false;
-            autoBtn.textContent = 'auto type';
-        });
-
-        // Keyboard navigation
+        // Keyboard controls
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' && !isTyping) {
+            if (e.key === 'ArrowRight') {
+                pauseTyping();
                 nextPoem();
-            } else if (e.key === 'ArrowLeft' && !isTyping) {
+            } else if (e.key === 'ArrowLeft') {
+                pauseTyping();
                 prevPoem();
             } else if (e.key === ' ' || e.key === 'Spacebar') {
                 e.preventDefault();
-                toggleAutoMode();
+                togglePlay();
             } else if (e.key === 'Escape') {
-                clearTypewriter();
-                autoMode = false;
-                autoBtn.textContent = 'auto type';
+                pauseTyping();
             }
         });
 
-        // Start with first poem
-        startTyping();
+        // Initialize
+        init();
     </script>
 </body>
 </html>
