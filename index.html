@@ -1,32 +1,652 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Connected Concepts</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poetry Mind Map - A Network of Verses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f1f5f9;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 3.2rem;
+            background: linear-gradient(90deg, #c4b5fd, #93c5fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            background: rgba(30, 41, 59, 0.7);
+            color: #e2e8f0;
+            border: 1px solid #475569;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .theme-btn:hover, .theme-btn.active {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .mindmap-container {
+            width: 100%;
+            height: 70vh;
+            min-height: 600px;
+            border-radius: 15px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid #334155;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        #mindmap {
+            width: 100%;
+            height: 100%;
+        }
+
+        .node {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 10;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .node:hover {
+            transform: scale(1.1);
+            z-index: 100;
+        }
+
+        .node-core {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .node-theme {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .node-poem {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: white;
+            font-size: 0.8rem;
+            box-shadow: 0 3px 10px rgba(245, 158, 11, 0.4);
+        }
+
+        .node i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .connection {
+            position: absolute;
+            background: rgba(148, 163, 184, 0.4);
+            transform-origin: 0 0;
+            height: 2px;
+            z-index: 1;
+        }
+
+        .details-panel {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #334155;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-panel h2 {
+            color: #c4b5fd;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .details-panel h2 i {
+            color: #8b5cf6;
+        }
+
+        .poem-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+
+        .poem-content h3 {
+            color: #fbbf24;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .poem-content p {
+            margin-bottom: 15px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #475569;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #94a3b8;
+            border-top: 1px solid #334155;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .mindmap-container {
+                height: 60vh;
+                min-height: 500px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .theme-btn {
+                width: 80%;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>Poetry Mind Map</h1>
+            <p>Explore the interconnected themes, emotions, and verses of my poetry. Click on any node to discover more.</p>
+        </header>
 
-  <div class="network">
-    <div class="node left">
-      <h3>Idea A</h3>
-      <p>Origin point of the system.</p>
+        <div class="controls">
+            <button class="theme-btn active" data-theme="all">All Poems</button>
+            <button class="theme-btn" data-theme="love">Love & Relationships</button>
+            <button class="theme-btn" data-theme="nature">Nature & Seasons</button>
+            <button class="theme-btn" data-theme="introspection">Introspection</button>
+            <button class="theme-btn" data-theme="melancholy">Melancholy & Longing</button>
+        </div>
+
+        <div class="main-content">
+            <div class="mindmap-container">
+                <div id="mindmap"></div>
+            </div>
+
+            <div class="details-panel">
+                <h2><i class="fas fa-book-open"></i> <span id="panel-title">Select a Poem</span></h2>
+                <div id="panel-content" class="poem-content">
+                    <div class="empty-state">
+                        <i class="fas fa-star"></i>
+                        <p>Click on any poem node in the mind map to read it here. The connections show how poems relate to different themes and each other.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Poetry Mind Map &copy; 2023 | A Network of Verses</p>
+        </footer>
     </div>
 
-    <div class="node center">
-      <h3>Idea B</h3>
-      <p>The interaction hub.</p>
-    </div>
+    <script>
+        // Poetry data
+        const poems = [
+            {
+                id: 1,
+                title: "Whispers of Dawn",
+                theme: "nature",
+                content: `The sun ascends with gentle grace,
+A golden hue on nature's face.
+The morning dew on petals glistens,
+As day awakens, night now listens.
 
-    <div class="node right">
-      <h3>Idea C</h3>
-      <p>Derived outcome.</p>
-    </div>
+The birdsong rises, sweet and clear,
+Dispelling every lingering fear.
+A new beginning, fresh and pure,
+In dawn's embrace we feel secure.`,
+                color: "#10b981"
+            },
+            {
+                id: 2,
+                title: "Echoes of You",
+                theme: "love",
+                content: `Your memory lingers in the air,
+A scent of roses, soft and rare.
+In quiet moments, you appear,
+A presence that I hold so dear.
 
-    <span class="line l1"></span>
-    <span class="line l2"></span>
-  </div>
+Though time may pass and seasons change,
+My feelings for you never range.
+You're in the stars, the moon, the sea,
+Forever part of what's in me.`,
+                color: "#ef4444"
+            },
+            {
+                id: 3,
+                title: "Silent Conversations",
+                theme: "introspection",
+                content: `Within the quiet of my mind,
+A universe of thoughts I find.
+Conversations with my soul,
+Trying to become whole.
 
+Questions asked without a sound,
+On silent battlegrounds I'm found.
+Seeking truth in introspection,
+Finding my own direction.`,
+                color: "#8b5cf6"
+            },
+            {
+                id: 4,
+                title: "Autumn's Lament",
+                theme: "melancholy",
+                content: `The leaves descend in red and gold,
+A story of the year now told.
+The air grows crisp, the light grows thin,
+As autumn's symphony begins.
+
+A melancholy, sweet refrain,
+Of summer's loss and winter's gain.
+The beauty of a slow goodbye,
+Beneath a fading autumn sky.`,
+                color: "#f59e0b"
+            },
+            {
+                id: 5,
+                title: "Ocean's Embrace",
+                theme: "nature",
+                content: `The ocean whispers ancient tales,
+In rhythmic waves and salty gales.
+A timeless dance of ebb and flow,
+Where secrets of the deep waters go.
+
+Its vast expanse both frees and binds,
+A home for hearts and searching minds.
+In every crashing wave I see,
+A reflection of eternity.`,
+                color: "#0ea5e9"
+            },
+            {
+                id: 6,
+                title: "Unspoken Words",
+                theme: "love",
+                content: `A language formed without a sound,
+In glances, touches, common ground.
+The quiet spaces between words,
+Where meaning flies like startled birds.
+
+All that I've longed but never said,
+Lingers in my heart instead.
+In silence, love finds its true voice,
+Making the most difficult choice.`,
+                color: "#ec4899"
+            },
+            {
+                id: 7,
+                title: "Shadow and Light",
+                theme: "introspection",
+                content: `Two sides of one imperfect whole,
+The hidden and the seen, my soul.
+The darkness where my fears reside,
+The light where all my hopes abide.
+
+I walk the line between the two,
+Discovering what is false and true.
+In shadows, lessons I am learning,
+Toward the light, my spirit turning.`,
+                color: "#6366f1"
+            },
+            {
+                id: 8,
+                title: "Fading Embers",
+                theme: "melancholy",
+                content: `The dying glow of what once burned,
+For lessons learned and bridges turned.
+The cooling ashes of desire,
+The embers of a former fire.
+
+Yet in the grey, a warmth remains,
+A memory that softly stains.
+What once was bright now fades to grey,
+But taught my heart to find its way.`,
+                color: "#64748b"
+            }
+        ];
+
+        // Themes data
+        const themes = [
+            { id: "love", name: "Love & Relationships", icon: "fas fa-heart" },
+            { id: "nature", name: "Nature & Seasons", icon: "fas fa-leaf" },
+            { id: "introspection", name: "Introspection", icon: "fas fa-brain" },
+            { id: "melancholy", name: "Melancholy & Longing", icon: "fas fa-cloud" }
+        ];
+
+        // DOM elements
+        const mindmapEl = document.getElementById('mindmap');
+        const panelTitle = document.getElementById('panel-title');
+        const panelContent = document.getElementById('panel-content');
+        const themeButtons = document.querySelectorAll('.theme-btn');
+        
+        // Current active theme
+        let activeTheme = 'all';
+        
+        // Initialize mind map
+        function initMindMap() {
+            // Clear previous mind map
+            mindmapEl.innerHTML = '';
+            
+            // Create central node
+            const centerX = mindmapEl.clientWidth / 2;
+            const centerY = mindmapEl.clientHeight / 2;
+            
+            createNode('center', centerX, centerY, 'My Poetry', 'fas fa-feather-alt', 'node-core');
+            
+            // Create theme nodes
+            const themeRadius = Math.min(mindmapEl.clientWidth, mindmapEl.clientHeight) * 0.3;
+            const themeAngleStep = (2 * Math.PI) / themes.length;
+            
+            themes.forEach((theme, index) => {
+                const angle = index * themeAngleStep;
+                const x = centerX + themeRadius * Math.cos(angle);
+                const y = centerY + themeRadius * Math.sin(angle);
+                
+                createNode(theme.id, x, y, theme.name, theme.icon, 'node-theme');
+                
+                // Connect theme to center
+                createConnection(centerX, centerY, x, y);
+                
+                // Create poem nodes for this theme
+                const themePoems = poems.filter(poem => poem.theme === theme.id);
+                const poemRadius = themeRadius * 0.5;
+                const poemAngleStep = (2 * Math.PI) / themePoems.length;
+                
+                themePoems.forEach((poem, poemIndex) => {
+                    const poemAngle = angle + (poemIndex - (themePoems.length-1)/2) * poemAngleStep * 0.7;
+                    const poemX = x + poemRadius * Math.cos(poemAngle);
+                    const poemY = y + poemRadius * Math.sin(poemAngle);
+                    
+                    createNode(`poem-${poem.id}`, poemX, poemY, poem.title, 'fas fa-file-alt', 'node-poem');
+                    
+                    // Connect poem to theme
+                    createConnection(x, y, poemX, poemY);
+                });
+            });
+            
+            // Add event listeners to nodes
+            addNodeEventListeners();
+        }
+        
+        // Create a node element
+        function createNode(id, x, y, text, icon, className) {
+            const node = document.createElement('div');
+            node.id = id;
+            node.className = `node ${className}`;
+            node.style.left = `${x}px`;
+            node.style.top = `${y}px`;
+            
+            node.innerHTML = `
+                <i class="${icon}"></i>
+                <span>${text}</span>
+            `;
+            
+            mindmapEl.appendChild(node);
+            
+            // Adjust position to center the node
+            const nodeWidth = node.offsetWidth;
+            const nodeHeight = node.offsetHeight;
+            node.style.left = `${x - nodeWidth/2}px`;
+            node.style.top = `${y - nodeHeight/2}px`;
+            
+            return node;
+        }
+        
+        // Create a connection line between two points
+        function createConnection(x1, y1, x2, y2) {
+            const connection = document.createElement('div');
+            connection.className = 'connection';
+            
+            // Calculate distance and angle
+            const dx = x2 - x1;
+            const dy = y2 - y1;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+            
+            // Set connection styles
+            connection.style.width = `${distance}px`;
+            connection.style.left = `${x1}px`;
+            connection.style.top = `${y1}px`;
+            connection.style.transform = `rotate(${angle}deg)`;
+            
+            mindmapEl.appendChild(connection);
+        }
+        
+        // Add event listeners to nodes
+        function addNodeEventListeners() {
+            const nodes = document.querySelectorAll('.node');
+            
+            nodes.forEach(node => {
+                node.addEventListener('click', function() {
+                    const nodeId = this.id;
+                    
+                    // Remove active class from all nodes
+                    nodes.forEach(n => n.classList.remove('active'));
+                    
+                    // Add active class to clicked node
+                    this.classList.add('active');
+                    
+                    // Show content based on node type
+                    if (nodeId.startsWith('poem-')) {
+                        const poemId = parseInt(nodeId.split('-')[1]);
+                        const poem = poems.find(p => p.id === poemId);
+                        
+                        if (poem) {
+                            const theme = themes.find(t => t.id === poem.theme);
+                            panelTitle.textContent = poem.title;
+                            panelContent.innerHTML = `
+                                <h3>${poem.title}</h3>
+                                <p><strong>Theme:</strong> ${theme ? theme.name : 'General'}</p>
+                                <div style="white-space: pre-line; margin-top: 20px;">${poem.content}</div>
+                            `;
+                        }
+                    } else if (nodeId === 'center') {
+                        panelTitle.textContent = 'My Poetry Collection';
+                        panelContent.innerHTML = `
+                            <h3>Welcome to My Poetry Mind Map</h3>
+                            <p>This interactive visualization represents ${poems.length} poems organized around ${themes.length} central themes.</p>
+                            <p>Click on any theme node to filter poems by that theme, or click on individual poem nodes to read them.</p>
+                            <p>Each connection represents the relationship between poems and their thematic elements, creating a network of poetic expression.</p>
+                        `;
+                    } else {
+                        // It's a theme node
+                        const theme = themes.find(t => t.id === nodeId);
+                        if (theme) {
+                            const themePoems = poems.filter(poem => poem.theme === theme.id);
+                            panelTitle.textContent = theme.name;
+                            
+                            let poemsHTML = `<h3>${theme.name} Poems</h3>`;
+                            poemsHTML += `<p>This theme includes ${themePoems.length} poems exploring ${theme.name.toLowerCase()}.</p>`;
+                            poemsHTML += '<ul style="margin-top: 15px; padding-left: 20px;">';
+                            themePoems.forEach(poem => {
+                                poemsHTML += `<li style="margin-bottom: 10px;"><strong>${poem.title}</strong> - Click the node to read</li>`;
+                            });
+                            poemsHTML += '</ul>';
+                            
+                            panelContent.innerHTML = poemsHTML;
+                        }
+                    }
+                });
+            });
+        }
+        
+        // Filter poems by theme
+        function filterByTheme(theme) {
+            activeTheme = theme;
+            
+            // Update button states
+            themeButtons.forEach(btn => {
+                if (btn.dataset.theme === theme) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Hide/show nodes based on theme
+            const allNodes = document.querySelectorAll('.node');
+            const allConnections = document.querySelectorAll('.connection');
+            
+            if (theme === 'all') {
+                // Show all nodes and connections
+                allNodes.forEach(node => {
+                    node.style.opacity = '1';
+                    node.style.display = 'flex';
+                });
+                allConnections.forEach(conn => {
+                    conn.style.opacity = '0.4';
+                });
+            } else {
+                // Show only theme node and its poems
+                allNodes.forEach(node => {
+                    if (node.id === 'center' || node.id === theme || node.id.startsWith(`poem-`)) {
+                        const poemId = node.id.startsWith('poem-') ? parseInt(node.id.split('-')[1]) : null;
+                        const poem = poemId ? poems.find(p => p.id === poemId) : null;
+                        
+                        if (node.id === 'center' || node.id === theme || (poem && poem.theme === theme)) {
+                            node.style.opacity = '1';
+                            node.style.display = 'flex';
+                        } else {
+                            node.style.opacity = '0.2';
+                            node.style.display = 'flex';
+                        }
+                    } else {
+                        node.style.opacity = '0.2';
+                        node.style.display = 'flex';
+                    }
+                });
+                
+                // Adjust connection visibility
+                allConnections.forEach(conn => {
+                    conn.style.opacity = '0.2';
+                });
+            }
+            
+            // If a theme node was clicked, show its content
+            if (theme !== 'all') {
+                const themeNode = document.getElementById(theme);
+                if (themeNode) {
+                    themeNode.click();
+                }
+            } else {
+                // Show center node content
+                const centerNode = document.getElementById('center');
+                if (centerNode) {
+                    centerNode.click();
+                }
+            }
+        }
+        
+        // Add event listeners to theme buttons
+        themeButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const theme = this.dataset.theme;
+                filterByTheme(theme);
+            });
+        });
+        
+        // Initialize the mind map when page loads
+        window.addEventListener('load', initMindMap);
+        
+        // Reinitialize mind map on window resize
+        window.addEventListener('resize', initMindMap);
+    </script>
 </body>
 </html>
