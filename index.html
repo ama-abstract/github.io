@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>— POETRY —</title>
+    <title>ANGEL POETRY</title>
     <style>
         * {
             margin: 0;
@@ -12,179 +12,249 @@
         }
         
         body {
-            background-color: #0a0a0a;
+            background-color: #000;
             color: #fff;
-            font-family: 'Inter', -apple-system, sans-serif;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.5;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
-        /* Fullscreen Background Image */
-        .bg-image {
+        /* Animated Background Layers */
+        .bg-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            z-index: -3;
+            opacity: 0.15;
+        }
+        
+        .bg-1 {
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.05) 0%, transparent 50%);
+        }
+        
+        .bg-2 {
+            background-image: url('https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
             background-size: cover;
             background-position: center;
-            opacity: 0.15;
+            opacity: 0.08;
+            filter: grayscale(100%) contrast(120%);
+            z-index: -2;
+        }
+        
+        .bg-3 {
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255, 255, 255, 0.03) 50%, 
+                transparent 70%);
+            animation: bgShift 20s infinite linear;
             z-index: -1;
+        }
+        
+        @keyframes bgShift {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(100px) translateY(50px); }
         }
         
         /* Main Container */
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 30px;
         }
         
-        /* Header - Minimal */
+        /* Header */
         header {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 60px;
             padding: 20px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .site-title {
-            font-size: 2em;
-            font-weight: 300;
-            letter-spacing: 8px;
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            letter-spacing: -1px;
             color: #fff;
             text-transform: uppercase;
-            margin-bottom: 10px;
+        }
+        
+        .logo span {
+            color: #ff3366;
         }
         
         .tagline {
             font-size: 0.9em;
-            color: #aaa;
-            letter-spacing: 2px;
+            color: #888;
             font-weight: 300;
+            letter-spacing: 2px;
+            text-align: right;
         }
         
-        /* Navigation Tabs */
-        .nav-tabs {
+        /* Main Navigation - ME, MYSELF, I */
+        .main-nav {
             display: flex;
-            justify-content: center;
-            gap: 2px;
+            gap: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1px;
+            border-radius: 12px;
             margin-bottom: 50px;
-            flex-wrap: wrap;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .tab {
+        .nav-btn {
+            flex: 1;
+            padding: 18px 25px;
             background: transparent;
             border: none;
-            padding: 15px 25px;
             color: #888;
-            font-size: 0.9em;
-            letter-spacing: 2px;
+            font-size: 1em;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            text-align: center;
             position: relative;
+            overflow: hidden;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
-        .tab:hover {
+        .nav-btn:hover {
             color: #fff;
+            background: rgba(255, 255, 255, 0.02);
         }
         
-        .tab.active {
+        .nav-btn.active {
             color: #fff;
+            background: rgba(255, 255, 255, 0.08);
         }
         
-        .tab.active::after {
+        .nav-btn.active::before {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 25%;
-            width: 50%;
-            height: 1px;
-            background: #fff;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #ff3366, #3366ff);
         }
         
         /* Poem Grid */
         .poem-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
+            gap: 25px;
             margin-bottom: 60px;
         }
         
         .poem-card {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 8px;
+            padding: 25px;
             transition: all 0.3s;
             cursor: pointer;
             backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
         }
         
         .poem-card:hover {
-            border-color: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.15);
             transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .poem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #ff3366, transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .poem-card:hover::before {
+            opacity: 1;
         }
         
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .poem-title {
             font-size: 1.3em;
-            font-weight: 400;
+            font-weight: 600;
             color: #fff;
-            line-height: 1.4;
+            line-height: 1.3;
+            margin-right: 15px;
+        }
+        
+        .poem-emoji {
+            font-size: 1.5em;
+            margin-bottom: 10px;
         }
         
         .poem-date {
-            font-size: 0.8em;
+            font-size: 0.75em;
             color: #666;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 20px;
             white-space: nowrap;
-            margin-left: 15px;
         }
         
         .poem-excerpt {
             color: #aaa;
             font-size: 0.95em;
-            line-height: 1.7;
+            line-height: 1.6;
             margin-bottom: 20px;
             display: -webkit-box;
-            -webkit-line-clamp: 4;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
         
-        .poem-tags {
+        .poem-stats {
             display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 0.8em;
+            color: #666;
         }
         
-        .tag {
-            font-size: 0.7em;
-            padding: 4px 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #888;
-            letter-spacing: 1px;
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
-        /* Poem Modal */
+        /* Modal */
         .modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.9);
             display: none;
             z-index: 1000;
             align-items: center;
             justify-content: center;
-            padding: 40px;
+            padding: 20px;
         }
         
         .modal.active {
@@ -192,32 +262,55 @@
         }
         
         .modal-content {
-            max-width: 800px;
+            max-width: 700px;
             width: 100%;
             background: #111;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
             max-height: 90vh;
             overflow-y: auto;
+            position: relative;
         }
         
         .modal-header {
             padding: 30px 40px 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            background: #111;
+            z-index: 1;
+        }
+        
+        .modal-title-row {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
+            margin-bottom: 10px;
         }
         
         .modal-title {
             font-size: 1.8em;
-            font-weight: 300;
+            font-weight: 600;
             color: #fff;
             line-height: 1.3;
+        }
+        
+        .modal-category {
+            font-size: 0.75em;
+            color: #ff3366;
+            background: rgba(255, 51, 102, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-left: 15px;
+            white-space: nowrap;
         }
         
         .modal-date {
             color: #666;
             font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
             margin-top: 10px;
         }
         
@@ -227,8 +320,9 @@
             color: #888;
             font-size: 1.5em;
             cursor: pointer;
-            padding: 10px;
+            padding: 5px;
             line-height: 1;
+            transition: color 0.3s;
         }
         
         .close-modal:hover {
@@ -236,18 +330,18 @@
         }
         
         .modal-body {
-            padding: 40px;
+            padding: 30px 40px 40px;
         }
         
         .poem-full {
             white-space: pre-line;
             font-size: 1.1em;
-            line-height: 1.8;
+            line-height: 1.7;
             color: #ccc;
         }
         
         .stanza {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
         
         /* Footer */
@@ -260,28 +354,45 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .social-link:hover {
+            color: #fff;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .tagline {
+                text-align: center;
+            }
+            
+            .main-nav {
+                flex-direction: column;
+            }
+            
             .poem-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .site-title {
-                font-size: 1.5em;
-                letter-spacing: 5px;
-            }
-            
-            .nav-tabs {
-                gap: 0;
-            }
-            
-            .tab {
-                padding: 12px 15px;
-                font-size: 0.8em;
-            }
-            
-            .modal {
-                padding: 20px;
             }
             
             .modal-header,
@@ -290,15 +401,15 @@
             }
         }
         
-        /* Selection Color */
+        /* Selection */
         ::selection {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 51, 102, 0.3);
             color: #fff;
         }
         
         /* Scrollbar */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         
         ::-webkit-scrollbar-track {
@@ -306,42 +417,46 @@
         }
         
         ::-webkit-scrollbar-thumb {
-            background: #444;
+            background: #333;
+            border-radius: 4px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
-            background: #555;
+            background: #444;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Background Image -->
-    <div class="bg-image"></div>
+    <!-- Background Layers -->
+    <div class="bg-layer bg-1"></div>
+    <div class="bg-layer bg-2"></div>
+    <div class="bg-layer bg-3"></div>
     
     <div class="container">
         <header>
-            <h1 class="site-title">POETRY</h1>
-            <div class="tagline">WORDS FROM THE STREETS • THOUGHTS FROM THE DEPTHS</div>
+            <div class="logo">ANGEL<span>POETRY</span></div>
+            <div class="tagline">GEN Z STREET POETRY • REAL TALK ONLY</div>
         </header>
         
-        <!-- Navigation -->
-        <div class="nav-tabs">
-            <button class="tab active" data-category="all">ALL</button>
-            <button class="tab" data-category="urban">URBAN</button>
-            <button class="tab" data-category="introspection">INTROSPECTION</button>
-            <button class="tab" data-category="love">LOVE</button>
-            <button class="tab" data-category="existence">EXISTENCE</button>
+        <!-- Main Navigation -->
+        <div class="main-nav">
+            <button class="nav-btn active" data-category="me">ME</button>
+            <button class="nav-btn" data-category="myself">MYSELF</button>
+            <button class="nav-btn" data-category="i">I</button>
         </div>
         
         <!-- Poem Grid -->
         <div class="poem-grid" id="poemGrid">
-            <!-- Poems will be inserted here -->
+            <!-- Poems will be loaded here -->
         </div>
         
         <footer>
-            <div>© 2024 • ALL RIGHTS RESERVED</div>
-            <div style="margin-top: 10px; color: #444;">WORDS HAVE WEIGHT • CARRY THEM WISELY</div>
+            <div>ANGEL POETRY © 2024 • ALL VERSES PROTECTED</div>
+            <div class="social-links">
+                <a href="#" class="social-link">INSTAGRAM</a>
+                <a href="#" class="social-link">TIKTOK</a>
+                <a href="#" class="social-link">SPOTIFY</a>
+            </div>
         </footer>
     </div>
     
@@ -349,11 +464,16 @@
     <div class="modal" id="poemModal">
         <div class="modal-content">
             <div class="modal-header">
-                <div>
-                    <h2 class="modal-title" id="modalTitle">POEM TITLE</h2>
-                    <div class="modal-date" id="modalDate">DATE</div>
+                <div class="modal-title-row">
+                    <div>
+                        <h2 class="modal-title" id="modalTitle">POEM TITLE</h2>
+                        <div class="modal-date" id="modalDate">
+                            <span id="modalDateText">DATE</span>
+                            <span class="modal-category" id="modalCategory">CATEGORY</span>
+                        </div>
+                    </div>
+                    <button class="close-modal" id="closeModal">&times;</button>
                 </div>
-                <button class="close-modal" id="closeModal">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="poem-full" id="modalContent">
@@ -364,171 +484,227 @@
     </div>
 
     <script>
-        // Poems Database - You can easily add/remove poems here
+        // Street Angel Poetry Database
         const poems = [
             {
                 id: 1,
-                title: "CONCRETE DREAMS",
-                category: "urban",
-                date: "WINTER 2023",
-                tags: ["CITY", "NIGHT", "MEMORY"],
-                excerpt: "Streetlights paint the pavement gold / While the subway rumbles stories untold...",
-                content: `Streetlights paint the pavement gold
-While the subway rumbles stories untold
-Neon signs whisper promises
-To empty pockets and lonely wrists
+                title: "ANGEL WITH BROKEN WINGS",
+                category: "me",
+                date: "MARCH 2024",
+                emoji: "👼",
+                tags: ["street", "broken", "real"],
+                excerpt: "They see the halo, miss the scars / Streetlights my only guiding stars...",
+                content: `They see the halo, miss the scars
+Streetlights my only guiding stars
+Concrete angel with chipped paint
+Trying to be what all the saints ain't
 
-The city breathes in carbon sighs
-And watches through a thousand eyes
-Every window holds a life
-Cut with struggle, edged with strife
+My wings got clipped in the last fight
+Still trying to catch the morning light
+But these feathers heavy with city rain
+And all this holy starting to feel like pain
 
-We're all just ghosts in concrete shells
-Ringing our own private bells
-Waiting for the morning train
-To wash away the midnight stain`
+Yet in the broken, I find my rhyme
+Making beauty out of stolen time
+A sacred thing in a profane place
+Finding grace in the fall from grace`,
+                stats: { views: "2.4K", likes: "387", shares: "42" }
             },
             {
                 id: 2,
-                title: "MIDNIGHT THOUGHTS",
-                category: "introspection",
-                date: "FALL 2023",
-                tags: ["SELF", "QUIET", "THOUGHT"],
-                excerpt: "3 AM and the mind won't sleep / Counting losses buried deep...",
-                content: `3 AM and the mind won't sleep
-Counting losses buried deep
-The ceiling fan's hypnotic spin
-Matching rhythms deep within
+                title: "GAS STATION ANGEL",
+                category: "me",
+                date: "FEBRUARY 2024",
+                emoji: "⛽",
+                tags: ["night", "lonely", "urban"],
+                excerpt: "3 AM at the Chevron pump / Coffee bitter, soul in a slump...",
+                content: `3 AM at the Chevron pump
+Coffee bitter, soul in a slump
+Fluorescent light like judgment day
+For all the ghosts who lost their way
 
-Regrets parade in ordered lines
-Through the darkness of these times
-Every "what if," every "might"
-Keeping company with night
+The attendant's seen a thousand tales
+Of midnight fails and derailed rails
+We're all just passing through the glow
+With nowhere left that we can go
 
-But in this solitary space
-I find a different kind of grace
-Where thoughts can roam without a leash
-And all the inner voices cease
+But in this temporary space
+I find a strange kind of grace
+Two strangers sharing silent nods
+Both temporarily at odds
 
-Until the first light starts to creep
-And the world begins to wake from sleep`
+With whatever life became
+Before we got into this game`,
+                stats: { views: "3.1K", likes: "512", shares: "89" }
             },
             {
                 id: 3,
-                title: "SUBWAY SONNET",
-                category: "urban",
-                date: "SPRING 2024",
-                tags: ["TRANSPORT", "PEOPLE", "MOVEMENT"],
-                excerpt: "Underground in fluorescent glow / A hundred stories come and go...",
-                content: `Underground in fluorescent glow
-A hundred stories come and go
-Eyes avoiding other eyes
-In this temporary compromise
+                title: "THE MIRROR LIES",
+                category: "myself",
+                date: "JANUARY 2024",
+                emoji: "🪞",
+                tags: ["self", "truth", "identity"],
+                excerpt: "The reflection shows what I pretend / Not who I am or how I bend...",
+                content: `The reflection shows what I pretend
+Not who I am or how I bend
+Surface deep and Instagram clean
+Hiding everything in between
 
-The train arrives with metal scream
-Fulfilling some collective dream
-Of moving while remaining still
-Obeying some unwritten will
+But late at night when filters fade
+And all the perfect masks are laid
+Aside, the truth begins to speak
+In whispers only I can seek
 
-We're atoms in a rushing stream
-Living out our private dream
-Until the doors slide open wide
-And we step into the outside tide
+This messy, complicated soul
+That doesn't fit the given role
+Of having all the answers right
+When I'm just guessing through the night
 
-Carrying with us what we've seen
-In the spaces in between`
+Maybe the beauty's in the flaw
+In being everything I saw
+I couldn't be but chose to be
+In my own awkward poetry`,
+                stats: { views: "4.2K", likes: "721", shares: "156" }
             },
             {
                 id: 4,
-                title: "THE QUIET KIND",
-                category: "love",
-                date: "SUMMER 2023",
-                tags: ["AFFECTION", "SILENCE", "PRESENCE"],
-                excerpt: "Not the fireworks or grand display / But the quiet that comes to stay...",
-                content: `Not the fireworks or grand display
-But the quiet that comes to stay
-The knowing glance across the room
-That chases away the gathering gloom
+                title: "INTROSPECTION AT 3AM",
+                category: "myself",
+                date: "DECEMBER 2023",
+                emoji: "💭",
+                tags: ["thoughts", "late", "real"],
+                excerpt: "Brain running marathons on lack of sleep / Memories too loud, promises too deep...",
+                content: `Brain running marathons on lack of sleep
+Memories too loud, promises too deep
+Every mistake on constant replay
+From that thing I said last Tuesday
 
-Not the passionate declaration
-But the steady foundation
-Of showing up day after day
-In the ordinary way
+The ceiling fan's my only witness
+To this internal business
+Of taking stock of who I've been
+And where I'll go and where I've been
 
-It's in the coffee made just right
-And staying up too late at night
-Just talking about everything
-That makes our silent hearts sing
+But in this solitary hour
+I find a unexpected power
+To forgive the former versions
+Of myself and their diversions
 
-This love that doesn't need to shout
-To know what it's all about`
+Because growth isn't linear
+It's messy, unclear, and familiar
+All at once in the dark
+Making my uncertain mark`,
+                stats: { views: "2.8K", likes: "498", shares: "67" }
             },
             {
                 id: 5,
-                title: "TEMPORARY GHOSTS",
-                category: "existence",
-                date: "WINTER 2024",
-                tags: ["MORTALITY", "TIME", "BEING"],
-                excerpt: "We're just passing through this place / Leaving barely any trace...",
-                content: `We're just passing through this place
-Leaving barely any trace
-Temporary in our skin
-Before the next ones begin
+                title: "HIGHER SELF DIARIES",
+                category: "i",
+                date: "NOVEMBER 2023",
+                emoji: "✨",
+                tags: ["spirit", "truth", "real"],
+                excerpt: "The part that knows before I know / The silent watcher of the show...",
+                content: `The part that knows before I know
+The silent watcher of the show
+That plays out in my daily life
+Full of temporary strife
 
-But oh, the beauty we can make
-With the time that we can take
-To love, to hurt, to feel, to be
-In our brief reality
+This spark that feels eternal
+In a skin that feels so temporal
+Trying to remember what it knew
+Before this human interview
 
-Maybe that's the sacred art
-Of this human, fragile heart
-To know we're ghosts but still to care
-To be aware we're passing there
+It whispers in the quiet spaces
+Between all the frantic paces
+Of trying to be enough
+When the road gets kind of rough
 
-In the spaces between birth and end
-To be both message and the friend`
+Maybe we're all just learning
+How to keep the inner burning
+Bright enough to light the way
+Through another human day`,
+                stats: { views: "3.5K", likes: "602", shares: "124" }
             },
             {
                 id: 6,
-                title: "RAIN ON BROOKLYN BRIDGE",
-                category: "urban",
-                date: "FALL 2023",
-                tags: ["WEATHER", "ARCHITECTURE", "MOOD"],
-                excerpt: "Raindrops on steel cables sing / A melancholy offering...",
-                content: `Raindrops on steel cables sing
-A melancholy offering
-To the river far below
-And the traffic's steady flow
+                title: "SPIRITUAL BUT MAKE IT STREET",
+                category: "i",
+                date: "OCTOBER 2023",
+                emoji: "🏙️",
+                tags: ["urban", "sacred", "now"],
+                excerpt: "My altar's on the subway seat / My prayers in the concrete heat...",
+                content: `My altar's on the subway seat
+My prayers in the concrete heat
+Finding god in stranger's smiles
+And surviving city miles
 
-The city wears a watery veil
-As determined footsteps fail
-To outrun the coming storm
-And the gathering uniform
-Of umbrellas popping open
-Like flowers that were broken
+The sacred in the ordinary
+The temporary sanctuary
+Of a quiet bench at dawn
+Before the daily hustle's drawn
 
-But in this gray and liquid light
-The city feels both dark and bright
-Washed clean of yesterday's mistakes
-For whatever tomorrow makes`
+Me back into the rushing stream
+To chase another fading dream
+But carrying with me what I found
+On that holy piece of ground
+
+Maybe enlightenment's just this:
+Not looking for some perfect bliss
+But seeing beauty where it grows
+Even when nobody knows`,
+                stats: { views: "5.1K", likes: "892", shares: "231" }
+            },
+            {
+                id: 7,
+                title: "SKYSCRAPER PSALMS",
+                category: "me",
+                date: "SEPTEMBER 2023",
+                emoji: "🏗️",
+                tags: ["city", "height", "fall"],
+                excerpt: "Reaching up but feeling small / In the shadow of it all...",
+                content: `Reaching up but feeling small
+In the shadow of it all
+Concrete canyons echo back
+Everything I seem to lack
+
+But from the rooftop looking down
+I see the beauty of this town
+A million stories living there
+In windows filled with silent prayer
+
+We're all just trying to touch the sky
+Before our temporary time
+Runs out like subway trains at night
+Fading into morning light
+
+Maybe the climb is what matters
+Not if the ladder shatters
+As long as we reached for more
+Than what we had before`,
+                stats: { views: "2.9K", likes: "451", shares: "78" }
             }
         ];
 
         // DOM Elements
         const poemGrid = document.getElementById('poemGrid');
-        const tabs = document.querySelectorAll('.tab');
+        const navBtns = document.querySelectorAll('.nav-btn');
         const poemModal = document.getElementById('poemModal');
         const modalTitle = document.getElementById('modalTitle');
-        const modalDate = document.getElementById('modalDate');
+        const modalDateText = document.getElementById('modalDateText');
+        const modalCategory = document.getElementById('modalCategory');
         const modalContent = document.getElementById('modalContent');
         const closeModal = document.getElementById('closeModal');
 
-        let currentCategory = 'all';
+        let currentCategory = 'me';
 
         // Initialize
         function init() {
-            renderPoems(poems);
+            renderPoems(filterPoems('me'));
             setupEventListeners();
+        }
+
+        // Filter poems by category
+        function filterPoems(category) {
+            return poems.filter(poem => poem.category === category);
         }
 
         // Render poems to grid
@@ -539,13 +715,16 @@ For whatever tomorrow makes`
                 const card = document.createElement('div');
                 card.className = 'poem-card';
                 card.innerHTML = `
+                    <div class="poem-emoji">${poem.emoji}</div>
                     <div class="card-header">
                         <h3 class="poem-title">${poem.title}</h3>
                         <div class="poem-date">${poem.date}</div>
                     </div>
                     <div class="poem-excerpt">${poem.excerpt}</div>
-                    <div class="poem-tags">
-                        ${poem.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    <div class="poem-stats">
+                        <div class="stat">👁️ ${poem.stats.views}</div>
+                        <div class="stat">❤️ ${poem.stats.likes}</div>
+                        <div class="stat">↻ ${poem.stats.shares}</div>
                     </div>
                 `;
                 
@@ -557,36 +736,29 @@ For whatever tomorrow makes`
             });
         }
 
-        // Filter poems by category
-        function filterPoems(category) {
+        // Change category
+        function changeCategory(category) {
             currentCategory = category;
             
-            // Update active tab
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.dataset.category === category) {
-                    tab.classList.add('active');
+            // Update active button
+            navBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
                 }
             });
             
-            // Filter poems
-            let filteredPoems;
-            if (category === 'all') {
-                filteredPoems = poems;
-            } else {
-                filteredPoems = poems.filter(poem => poem.category === category);
-            }
-            
-            // Render filtered poems
-            renderPoems(filteredPoems);
+            // Render poems
+            renderPoems(filterPoems(category));
         }
 
         // Open poem modal
         function openPoemModal(poem) {
             modalTitle.textContent = poem.title;
-            modalDate.textContent = poem.date;
+            modalDateText.textContent = poem.date;
+            modalCategory.textContent = poem.category.toUpperCase();
             
-            // Format poem content with stanzas
+            // Format poem content
             const formattedContent = poem.content.split('\n\n')
                 .map(stanza => `<div class="stanza">${stanza.replace(/\n/g, '<br>')}</div>`)
                 .join('');
@@ -604,10 +776,10 @@ For whatever tomorrow makes`
 
         // Setup event listeners
         function setupEventListeners() {
-            // Tab clicks
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    filterPoems(tab.dataset.category);
+            // Navigation buttons
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    changeCategory(btn.dataset.category);
                 });
             });
             
@@ -629,7 +801,7 @@ For whatever tomorrow makes`
             });
         }
 
-        // Initialize the site
+        // Initialize
         init();
     </script>
 </body>
