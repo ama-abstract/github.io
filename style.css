@@ -18,6 +18,18 @@ header {
   margin-bottom: 3rem;
 }
 
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .gallery img {
   width: 100%;
   margin-bottom: 2rem;
