@@ -3,329 +3,365 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three Columns Layout</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>poetry.</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
         }
-
+        
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
+            background-color: #f5f1e8;
+            color: #3c2f2f;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
             min-height: 100vh;
             padding: 20px;
         }
-
+        
         .container {
-            max-width: 1200px;
+            max-width: 700px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 40px 20px;
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            color: #7f8c8d;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        .columns-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .column {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .column:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-        }
-
-        .column-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 25px;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .column-2 .column-icon {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-        }
-
-        .column-3 .column-icon {
-            background: linear-gradient(135deg, #9b59b6, #8e44ad);
-        }
-
-        .column h2 {
-            font-size: 1.8rem;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #ecf0f1;
-            font-weight: 600;
-        }
-
-        .column p {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: #555;
-            margin-bottom: 20px;
-        }
-
-        .column ul, .column ol {
+        
+        .typewriter {
+            border-left: 2px solid #8b7d6b;
             padding-left: 20px;
-            margin-bottom: 20px;
+            min-height: 300px;
         }
-
-        .column li {
-            margin-bottom: 10px;
-            line-height: 1.6;
-            color: #555;
+        
+        .line {
+            margin-bottom: 1.2em;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.5s forwards;
         }
-
-        .column-footer {
-            margin-top: auto;
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .title {
+            font-size: 1.8em;
+            margin-bottom: 2em;
+            color: #5d4037;
+            letter-spacing: 1px;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: #3c2f2f;
+            margin-left: 2px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .controls {
+            margin-top: 40px;
             padding-top: 20px;
-            border-top: 1px solid #ecf0f1;
-            color: #7f8c8d;
-            font-size: 0.9rem;
+            border-top: 1px solid #d7ccc8;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: transparent;
+            border: 1px solid #8b7d6b;
+            padding: 8px 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #5d4037;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: #e8dfd6;
+        }
+        
+        .coffee-cup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 1.5em;
+            color: #6d4c41;
+            opacity: 0.3;
+        }
+        
+        .poem-info {
+            font-size: 0.9em;
+            color: #8b7d6b;
+            margin-top: 30px;
             font-style: italic;
         }
-
-        .cta-section {
-            background: white;
-            border-radius: 12px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            margin-top: 40px;
+        
+        .index {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 0.8em;
+            color: #8b7d6b;
         }
-
-        .cta-section h2 {
-            font-size: 2rem;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        .cta-section p {
-            font-size: 1.1rem;
-            color: #7f8c8d;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            line-height: 1.6;
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            padding: 14px 32px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 30px;
-            color: #7f8c8d;
-            border-top: 1px solid #dfe6e9;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive design */
-        @media (max-width: 992px) {
-            .columns-container {
-                grid-template-columns: repeat(2, 1fr);
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 10px;
             }
             
-            .column:nth-child(3) {
-                grid-column: span 2;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .columns-container {
-                grid-template-columns: 1fr;
+            .typewriter {
+                padding-left: 10px;
             }
             
-            .column:nth-child(3) {
-                grid-column: span 1;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .column {
-                padding: 25px;
+            .coffee-cup {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
+    <div class="index">[ poetry index ]</div>
+    
     <div class="container">
-        <header>
-            <h1>Three Columns Layout</h1>
-            <p class="subtitle">A clean, responsive three-column design with headings, text content, and visual elements. Perfect for presenting information in an organized manner.</p>
-        </header>
-
-        <main>
-            <div class="columns-container">
-                <!-- Column 1 -->
-                <div class="column column-1">
-                    <div class="column-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <h2>Creative Ideas</h2>
-                    <p>This column showcases innovative thinking and creative approaches to problem-solving. The content focuses on generating fresh perspectives and thinking outside conventional boundaries.</p>
-                    <p>We explore how creativity can be cultivated through various techniques like brainstorming, mind mapping, and free association. These methods help unlock new possibilities in any field.</p>
-                    <ul>
-                        <li>Innovative thinking methodologies</li>
-                        <li>Creative problem-solving techniques</li>
-                        <li>Ideation workshops and practices</li>
-                        <li>Overcoming creative blocks</li>
-                    </ul>
-                    <div class="column-footer">
-                        Updated: March 2023 | 5 min read
-                    </div>
-                </div>
-
-                <!-- Column 2 -->
-                <div class="column column-2">
-                    <div class="column-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h2>Strategic Planning</h2>
-                    <p>Strategic planning involves setting goals, determining actions to achieve those goals, and mobilizing resources to execute the actions. This column examines effective planning methodologies.</p>
-                    <p>We discuss various frameworks for strategic development, including SWOT analysis, PEST analysis, and balanced scorecards. Each approach offers unique insights for organizational success.</p>
-                    <ol>
-                        <li>Define vision and mission</li>
-                        <li>Conduct environmental analysis</li>
-                        <li>Set strategic objectives</li>
-                        <li>Develop action plans</li>
-                        <li>Monitor and adjust strategies</li>
-                    </ol>
-                    <div class="column-footer">
-                        Updated: April 2023 | 7 min read
-                    </div>
-                </div>
-
-                <!-- Column 3 -->
-                <div class="column column-3">
-                    <div class="column-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h2>Team Collaboration</h2>
-                    <p>Effective collaboration is essential for achieving complex goals. This column explores techniques for fostering teamwork, communication, and synergy among diverse team members.</p>
-                    <p>We examine how digital tools, communication protocols, and team-building activities can enhance collaboration. The focus is on creating environments where collective intelligence thrives.</p>
-                    <p>Key aspects include establishing clear roles and responsibilities, creating psychological safety, and implementing effective feedback mechanisms. These elements contribute to high-performing teams.</p>
-                    <p>Remote collaboration tools and techniques have become increasingly important in today's distributed work environments, requiring new approaches to maintain connection and productivity.</p>
-                    <div class="column-footer">
-                        Updated: May 2023 | 8 min read
-                    </div>
-                </div>
-            </div>
-
-            <div class="cta-section">
-                <h2>Ready to Learn More?</h2>
-                <p>This three-column layout demonstrates how content can be organized in a clean, accessible format. Each column focuses on a specific theme with supporting details and examples.</p>
-                <button class="btn">Explore More Content</button>
-            </div>
-        </main>
-
-        <footer>
-            <p>Three Columns Layout &copy; 2023 | Designed with responsive principles</p>
-            <p style="margin-top: 10px;">Resize your browser to see how the columns adapt to different screen sizes</p>
-        </footer>
+        <div class="typewriter" id="typewriter">
+            <!-- Content will be typed here -->
+        </div>
+        
+        <div class="controls">
+            <button class="btn" id="prevBtn">← previous</button>
+            <button class="btn" id="nextBtn">next →</button>
+            <button class="btn" id="autoBtn">auto type</button>
+            <button class="btn" id="clearBtn">clear</button>
+        </div>
+        
+        <div class="poem-info" id="poemInfo"></div>
     </div>
+    
+    <div class="coffee-cup">☕</div>
 
     <script>
-        // Simple interactivity for the CTA button
-        document.querySelector('.btn').addEventListener('click', function() {
-            alert('Thanks for your interest! This is a demonstration layout.');
-        });
-        
-        // Add subtle animation to columns when they come into view
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+        const poems = [
+            {
+                title: "morning coffee",
+                lines: [
+                    "steam rises",
+                    "from the dark surface",
+                    "like a prayer",
+                    "in the quiet kitchen",
+                    "",
+                    "the first sip",
+                    "burns then comforts",
+                    "a familiar ritual",
+                    "waking the senses",
+                    "",
+                    "sunlight through the window",
+                    "catches in the swirl",
+                    "of cream"
+                ],
+                date: "october 2023",
+                tags: ["ritual", "awakening"]
+            },
+            {
+                title: "late night thoughts",
+                lines: [
+                    "the clock ticks",
+                    "in the silent apartment",
+                    "thoughts circle",
+                    "like moths around a lamp",
+                    "",
+                    "memories surface",
+                    "then sink again",
+                    "in the quiet dark",
+                    "",
+                    "somewhere a car passes",
+                    "headlights sweeping walls",
+                    "then gone"
+                ],
+                date: "november 2023",
+                tags: ["insomnia", "memory"]
+            },
+            {
+                title: "train window",
+                lines: [
+                    "raindrops race",
+                    "down the glass",
+                    "each taking",
+                    "a different path",
+                    "",
+                    "the world outside",
+                    "blurs into watercolor",
+                    "stations pass",
+                    "without names",
+                    "",
+                    "movement without motion",
+                    "a paradox of travel",
+                    "going somewhere",
+                    "while sitting still"
+                ],
+                date: "september 2023",
+                tags: ["travel", "observation"]
+            },
+            {
+                title: "empty notebook",
+                lines: [
+                    "blank pages",
+                    "full of potential",
+                    "that frightens me",
+                    "",
+                    "the first mark",
+                    "always the hardest",
+                    "a commitment",
+                    "to imperfection",
+                    "",
+                    "so i wait",
+                    "for the right words",
+                    "that never come",
+                    "while the empty pages",
+                    "whisper possibilities"
+                ],
+                date: "december 2023",
+                tags: ["creation", "doubt"]
+            }
+        ];
+
+        let currentPoem = 0;
+        let currentLine = 0;
+        let isTyping = false;
+        let autoMode = false;
+        let typeInterval;
+
+        const typewriter = document.getElementById('typewriter');
+        const poemInfo = document.getElementById('poemInfo');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const autoBtn = document.getElementById('autoBtn');
+        const clearBtn = document.getElementById('clearBtn');
+
+        function typeLine() {
+            if (currentLine >= poems[currentPoem].lines.length) {
+                isTyping = false;
+                if (autoMode) {
+                    setTimeout(nextPoem, 2000);
                 }
-            });
-        }, observerOptions);
-        
-        // Apply initial styles for animation
-        document.querySelectorAll('.column').forEach((column, index) => {
-            column.style.opacity = '0';
-            column.style.transform = 'translateY(20px)';
-            column.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            column.style.transitionDelay = `${index * 0.1}s`;
-            observer.observe(column);
-        });
-        
-        // Add hover effect for column icons
-        document.querySelectorAll('.column-icon').forEach(icon => {
-            icon.addEventListener('mouseenter', function() {
-                this.style.transform = 'rotate(10deg) scale(1.1)';
-            });
+                return;
+            }
+
+            isTyping = true;
+            const line = poems[currentPoem].lines[currentLine];
             
-            icon.addEventListener('mouseleave', function() {
-                this.style.transform = 'rotate(0deg) scale(1)';
-            });
+            const lineElement = document.createElement('div');
+            lineElement.className = 'line';
+            
+            typewriter.appendChild(lineElement);
+            
+            let charIndex = 0;
+            const typeChar = () => {
+                if (charIndex < line.length) {
+                    lineElement.textContent += line.charAt(charIndex);
+                    charIndex++;
+                    
+                    // Random typing speed for natural feel
+                    const speed = Math.random() * 30 + 40;
+                    setTimeout(typeChar, speed);
+                } else {
+                    currentLine++;
+                    setTimeout(typeLine, line === "" ? 300 : 800);
+                }
+            };
+            
+            typeChar();
+        }
+
+        function displayPoemInfo() {
+            const poem = poems[currentPoem];
+            poemInfo.textContent = `${poem.date} • ${poem.tags.join(', ')}`;
+        }
+
+        function startTyping() {
+            clearTypewriter();
+            currentLine = 0;
+            typeLine();
+            displayPoemInfo();
+        }
+
+        function clearTypewriter() {
+            typewriter.innerHTML = '';
+            isTyping = false;
+            clearInterval(typeInterval);
+        }
+
+        function nextPoem() {
+            currentPoem = (currentPoem + 1) % poems.length;
+            startTyping();
+        }
+
+        function prevPoem() {
+            currentPoem = (currentPoem - 1 + poems.length) % poems.length;
+            startTyping();
+        }
+
+        function toggleAutoMode() {
+            autoMode = !autoMode;
+            autoBtn.textContent = autoMode ? 'stop auto' : 'auto type';
+            
+            if (autoMode) {
+                if (!isTyping) {
+                    startTyping();
+                }
+            } else {
+                clearInterval(typeInterval);
+            }
+        }
+
+        // Event listeners
+        prevBtn.addEventListener('click', () => {
+            if (isTyping) return;
+            prevPoem();
         });
+
+        nextBtn.addEventListener('click', () => {
+            if (isTyping) return;
+            nextPoem();
+        });
+
+        autoBtn.addEventListener('click', toggleAutoMode);
+
+        clearBtn.addEventListener('click', () => {
+            clearTypewriter();
+            autoMode = false;
+            autoBtn.textContent = 'auto type';
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && !isTyping) {
+                nextPoem();
+            } else if (e.key === 'ArrowLeft' && !isTyping) {
+                prevPoem();
+            } else if (e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault();
+                toggleAutoMode();
+            } else if (e.key === 'Escape') {
+                clearTypewriter();
+                autoMode = false;
+                autoBtn.textContent = 'auto type';
+            }
+        });
+
+        // Start with first poem
+        startTyping();
     </script>
 </body>
 </html>
