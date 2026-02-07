@@ -3,455 +3,610 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poetry Notes Mind Map</title>
+    <title>Typewriter Poetry Map</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Georgia', serif;
         }
 
         body {
-            background-color: #fefefe;
-            color: #333;
+            font-family: 'Courier Prime', monospace;
+            background-color: #f5f1e3;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d4c4a8' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E");
+            color: #2c2416;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Typewriter paper effect */
+        .paper-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            background: linear-gradient(to bottom, transparent 95%, rgba(0,0,0,0.03) 100%);
+            z-index: 1000;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
         }
 
-        header {
+        /* Header with typewriter aesthetic */
+        .typewriter-header {
             text-align: center;
-            padding: 20px 0;
+            padding: 30px 0 40px;
             margin-bottom: 20px;
-            border-bottom: 1px solid #e0e0e0;
+            position: relative;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            color: #4a5568;
-            margin-bottom: 5px;
-            font-weight: normal;
+        .typewriter-header h1 {
+            font-family: 'Special Elite', cursive;
+            font-size: 3.5rem;
+            color: #2c2416;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
         }
 
-        header p {
-            font-size: 1rem;
-            color: #718096;
+        .typewriter-header h1:after {
+            content: '▮';
+            animation: blink 1s infinite;
+            margin-left: 5px;
+            color: #8b7355;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .typewriter-header p {
+            font-size: 1.1rem;
+            color: #5d4c37;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            border-top: 1px dashed #8b7355;
+            padding-top: 15px;
             font-style: italic;
         }
 
-        .main-layout {
+        /* Typewriter ribbon */
+        .ribbon {
+            height: 4px;
+            background: repeating-linear-gradient(90deg, 
+                #8b7355, #8b7355 10px, 
+                #d4c4a8 10px, #d4c4a8 20px);
+            margin: 10px 0 30px;
+            border-radius: 2px;
+        }
+
+        /* Minimal controls */
+        .minimal-controls {
             display: flex;
-            gap: 20px;
-            height: calc(100vh - 160px);
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
         }
 
-        .mindmap-area {
-            flex: 3;
-            background-color: #f9f7f7;
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
-            padding: 15px;
-            overflow: hidden;
+        .type-btn {
+            background: transparent;
+            color: #5d4c37;
+            border: 1px solid #8b7355;
+            padding: 8px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
             position: relative;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
         }
 
-        .controls-panel {
-            flex: 1;
-            background-color: white;
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            overflow-y: auto;
-            max-width: 320px;
+        .type-btn:hover {
+            background-color: rgba(139, 115, 85, 0.1);
         }
 
-        .panel-title {
-            font-size: 1.3rem;
-            color: #4a5568;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #e2e8f0;
+        .type-btn.active {
+            background-color: #8b7355;
+            color: #f5f1e3;
         }
 
-        #mindmap {
+        /* Main content area */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            position: relative;
+        }
+
+        /* Mind map container */
+        .mindmap-container {
+            width: 100%;
+            height: 65vh;
+            min-height: 550px;
+            background-color: #fefcf5;
+            border: 1px solid #d4c4a8;
+            box-shadow: 
+                0 4px 8px rgba(0,0,0,0.05),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mindmap-paper {
             width: 100%;
             height: 100%;
             position: relative;
-            overflow: auto;
+            background-color: #fefcf5;
         }
 
+        /* Typewriter nodes */
         .node {
             position: absolute;
-            background-color: white;
-            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            padding: 12px;
-            max-width: 180px;
+            transition: all 0.4s ease;
             z-index: 10;
+            text-align: center;
+            padding: 5px;
+            font-family: 'Courier Prime', monospace;
         }
 
         .node:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
             z-index: 100;
         }
 
-        .node.active {
-            border-color: #4299e1;
-            box-shadow: 0 4px 8px rgba(66, 153, 225, 0.2);
-        }
-
-        .node-title {
-            font-weight: bold;
-            font-size: 1rem;
-            color: #2d3748;
-            margin-bottom: 5px;
-            word-wrap: break-word;
-        }
-
-        .node-meta {
-            font-size: 0.8rem;
-            color: #718096;
-            margin-bottom: 8px;
-        }
-
-        .node-notes {
-            font-size: 0.85rem;
-            color: #4a5568;
-            line-height: 1.4;
-            max-height: 60px;
-            overflow: hidden;
-            word-wrap: break-word;
-        }
-
-        .node-center {
-            width: 120px;
-            height: 120px;
-            background-color: #f7fafc;
-            border: 2px dashed #cbd5e0;
+        .node-core {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #2c2416;
+            color: #f5f1e3;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
-            color: #4a5568;
             flex-direction: column;
+            border: 2px solid #8b7355;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .node-theme {
+            width: 85px;
+            height: 85px;
             border-radius: 50%;
+            background-color: #f5f1e3;
+            color: #2c2416;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border: 1px solid #8b7355;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+            font-size: 0.85rem;
         }
 
-        .node-center i {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-            color: #a0aec0;
+        .node-poem {
+            width: 70px;
+            height: 70px;
+            border-radius: 3px;
+            background-color: #fefcf5;
+            color: #2c2416;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border: 1px solid #b8a98d;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
         }
 
+        .node-poem:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background-color: #fff;
+        }
+
+        .node i {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .node-poem i {
+            font-size: 1rem;
+        }
+
+        /* Typewriter connection lines */
         .connection {
             position: absolute;
-            background-color: #e2e8f0;
+            background-color: #8b7355;
             transform-origin: 0 0;
             height: 1px;
             z-index: 1;
+            opacity: 0.6;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        /* Poem display - typewriter paper */
+        .poem-display {
+            background-color: #fefcf5;
+            border: 1px solid #d4c4a8;
+            border-top: 15px solid #8b7355;
+            padding: 30px;
+            box-shadow: 
+                0 4px 8px rgba(0,0,0,0.05),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            position: relative;
+            min-height: 250px;
         }
 
-        label {
-            display: block;
-            font-size: 0.9rem;
-            color: #4a5568;
-            margin-bottom: 5px;
-            font-weight: 500;
+        .poem-display:before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: repeating-linear-gradient(90deg, 
+                transparent, transparent 10px, 
+                #f5f1e3 10px, #f5f1e3 20px);
         }
 
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            font-family: 'Georgia', serif;
-            resize: vertical;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #4299e1;
-            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
-        }
-
-        .btn {
-            background-color: #4299e1;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: background-color 0.2s;
-            width: 100%;
-        }
-
-        .btn:hover {
-            background-color: #3182ce;
-        }
-
-        .btn-secondary {
-            background-color: #e2e8f0;
-            color: #4a5568;
-            margin-top: 10px;
-        }
-
-        .btn-secondary:hover {
-            background-color: #cbd5e0;
-        }
-
-        .poem-details {
-            background-color: #f7fafc;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 25px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .poem-details h3 {
-            font-size: 1.2rem;
-            color: #2d3748;
+        .poem-title {
+            font-family: 'Special Elite', cursive;
+            font-size: 1.8rem;
+            color: #2c2416;
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px dashed #d4c4a8;
+            letter-spacing: 1px;
         }
 
-        .detail-item {
-            margin-bottom: 15px;
+        .poem-content {
+            font-family: 'Courier Prime', monospace;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: #3a3225;
+            white-space: pre-line;
         }
 
-        .detail-label {
-            font-size: 0.85rem;
-            color: #718096;
-            margin-bottom: 5px;
-        }
-
-        .detail-content {
-            font-size: 0.95rem;
-            color: #2d3748;
-            line-height: 1.5;
+        .poem-meta {
+            font-size: 0.9rem;
+            color: #8b7355;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed #d4c4a8;
+            font-style: italic;
         }
 
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
-            color: #a0aec0;
+            padding: 60px 20px;
+            color: #8b7355;
+            font-style: italic;
         }
 
         .empty-state i {
             font-size: 2.5rem;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            opacity: 0.5;
         }
 
-        footer {
+        /* Footer with typewriter key details */
+        .typewriter-footer {
             text-align: center;
-            margin-top: 20px;
-            padding: 15px;
-            color: #a0aec0;
+            margin-top: 40px;
+            padding: 20px;
+            color: #8b7355;
             font-size: 0.85rem;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px dashed #d4c4a8;
+            letter-spacing: 0.5px;
         }
 
-        .instructions {
-            font-size: 0.85rem;
-            color: #718096;
-            background-color: #f7fafc;
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 20px;
-            border-left: 3px solid #4299e1;
+        .key-hint {
+            display: inline-block;
+            background-color: #f5f1e3;
+            border: 1px solid #d4c4a8;
+            padding: 3px 8px;
+            margin: 0 5px;
+            border-radius: 3px;
+            font-family: 'Courier Prime', monospace;
         }
 
-        @media (max-width: 900px) {
-            .main-layout {
+        /* Responsive */
+        @media (max-width: 768px) {
+            .typewriter-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .mindmap-container {
+                height: 50vh;
+                min-height: 400px;
+            }
+            
+            .minimal-controls {
                 flex-direction: column;
-                height: auto;
+                align-items: center;
             }
             
-            .controls-panel {
-                max-width: 100%;
-            }
-            
-            .mindmap-area {
-                min-height: 500px;
+            .type-btn {
+                width: 80%;
             }
         }
     </style>
 </head>
 <body>
+    <div class="paper-overlay"></div>
+    
     <div class="container">
-        <header>
-            <h1>Poetry Notes Mind Map</h1>
-            <p>Visual organization for your poems and notes</p>
+        <header class="typewriter-header">
+            <h1>POETRY MAP</h1>
+            <p>A typewriter-inspired network of verses and themes. Click on any node to explore connections.</p>
         </header>
+        
+        <div class="ribbon"></div>
 
-        <div class="main-layout">
-            <div class="mindmap-area">
-                <div id="mindmap"></div>
+        <div class="minimal-controls">
+            <button class="type-btn active" data-theme="all">ALL POEMS</button>
+            <button class="type-btn" data-theme="love">LOVE</button>
+            <button class="type-btn" data-theme="nature">NATURE</button>
+            <button class="type-btn" data-theme="introspection">REFLECTION</button>
+            <button class="type-btn" data-theme="melancholy">LONGING</button>
+        </div>
+
+        <div class="main-content">
+            <div class="mindmap-container">
+                <div class="mindmap-paper" id="mindmap"></div>
             </div>
 
-            <div class="controls-panel">
-                <h2 class="panel-title">Add/Edit Poem</h2>
-                
-                <form id="poem-form">
-                    <div class="form-group">
-                        <label for="poem-title">Poem Title</label>
-                        <input type="text" id="poem-title" placeholder="Enter poem title" required>
+            <div class="poem-display">
+                <div id="poem-display-content">
+                    <div class="empty-state">
+                        <i class="fas fa-keyboard"></i>
+                        <p>SELECT A POEM FROM THE MAP TO DISPLAY IT HERE</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">Each connection represents thematic relationships between verses</p>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="poem-theme">Theme/Category</label>
-                        <input type="text" id="poem-theme" placeholder="e.g., Love, Nature, Reflection">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="poem-notes">Notes</label>
-                        <textarea id="poem-notes" rows="4" placeholder="Add notes about this poem: inspiration, key lines, mood, etc."></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn" id="save-btn">Save Poem</button>
-                    <button type="button" class="btn btn-secondary" id="reset-btn">Reset Form</button>
-                </form>
-                
-                <div class="poem-details" id="details-container">
-                    <h3>Selected Poem Details</h3>
-                    <div id="poem-details">
-                        <div class="empty-state">
-                            <i class="fas fa-file-alt"></i>
-                            <p>Click on a poem node to view details here</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="instructions">
-                    <p><strong>How to use:</strong></p>
-                    <p>1. Add poems using the form</p>
-                    <p>2. Click on poem nodes to view details</p>
-                    <p>3. Drag nodes to rearrange the mind map</p>
-                    <p>4. Click and drag the background to pan</p>
                 </div>
             </div>
         </div>
 
-        <footer>
-            <p>Poetry Notes Mind Map • Click and drag to navigate • Double-click to add a new node</p>
+        <footer class="typewriter-footer">
+            <p>POETRY MAP <span class="key-hint">CLICK</span> NODES TO EXPLORE • <span class="key-hint">CLICK</span> THEMES TO FILTER</p>
+            <p style="margin-top: 10px;">AN INTERACTIVE TYPEWRITER-STYLE NETWORK</p>
         </footer>
     </div>
 
     <script>
-        // Initial poems data
-        let poems = [
-            { id: 1, title: "Whispers of Dawn", theme: "Nature", notes: "Written during sunrise at the beach. Focus on light imagery.", x: 300, y: 200 },
-            { id: 2, title: "Echoes of You", theme: "Love", notes: "Inspired by a lost relationship. Uses repetition for emphasis.", x: 450, y: 120 },
-            { id: 3, title: "Silent Conversations", theme: "Reflection", notes: "Explores internal dialogue and self-discovery.", x: 600, y: 200 },
-            { id: 4, title: "Autumn's Lament", theme: "Seasons", notes: "Metaphor for change and letting go. Written in fall 2022.", x: 300, y: 350 },
-            { id: 5, title: "Ocean's Embrace", theme: "Nature", notes: "Free verse about the sea's constant rhythm and comfort.", x: 150, y: 250 },
-            { id: 6, title: "Unspoken Words", theme: "Love", notes: "About things left unsaid in relationships. Short, haiku-like stanzas.", x: 550, y: 350 }
+        // Poetry data
+        const poems = [
+            {
+                id: 1,
+                title: "WHISPERS OF DAWN",
+                theme: "nature",
+                content: `The sun ascends with gentle grace,
+A golden hue on nature's face.
+The morning dew on petals glistens,
+As day awakens, night now listens.
+
+The birdsong rises, sweet and clear,
+Dispelling every lingering fear.
+A new beginning, fresh and pure,
+In dawn's embrace we feel secure.`,
+                color: "#8b7355"
+            },
+            {
+                id: 2,
+                title: "ECHOES OF YOU",
+                theme: "love",
+                content: `Your memory lingers in the air,
+A scent of roses, soft and rare.
+In quiet moments, you appear,
+A presence that I hold so dear.
+
+Though time may pass and seasons change,
+My feelings for you never range.
+You're in the stars, the moon, the sea,
+Forever part of what's in me.`,
+                color: "#8b7355"
+            },
+            {
+                id: 3,
+                title: "SILENT CONVERSATIONS",
+                theme: "introspection",
+                content: `Within the quiet of my mind,
+A universe of thoughts I find.
+Conversations with my soul,
+Trying to become whole.
+
+Questions asked without a sound,
+On silent battlegrounds I'm found.
+Seeking truth in introspection,
+Finding my own direction.`,
+                color: "#8b7355"
+            },
+            {
+                id: 4,
+                title: "AUTUMN'S LAMENT",
+                theme: "melancholy",
+                content: `The leaves descend in red and gold,
+A story of the year now told.
+The air grows crisp, the light grows thin,
+As autumn's symphony begins.
+
+A melancholy, sweet refrain,
+Of summer's loss and winter's gain.
+The beauty of a slow goodbye,
+Beneath a fading autumn sky.`,
+                color: "#8b7355"
+            },
+            {
+                id: 5,
+                title: "OCEAN'S EMBRACE",
+                theme: "nature",
+                content: `The ocean whispers ancient tales,
+In rhythmic waves and salty gales.
+A timeless dance of ebb and flow,
+Where secrets of the deep waters go.
+
+Its vast expanse both frees and binds,
+A home for hearts and searching minds.
+In every crashing wave I see,
+A reflection of eternity.`,
+                color: "#8b7355"
+            },
+            {
+                id: 6,
+                title: "UNSPOKEN WORDS",
+                theme: "love",
+                content: `A language formed without a sound,
+In glances, touches, common ground.
+The quiet spaces between words,
+Where meaning flies like startled birds.
+
+All that I've longed but never said,
+Lingers in my heart instead.
+In silence, love finds its true voice,
+Making the most difficult choice.`,
+                color: "#8b7355"
+            },
+            {
+                id: 7,
+                title: "SHADOW AND LIGHT",
+                theme: "introspection",
+                content: `Two sides of one imperfect whole,
+The hidden and the seen, my soul.
+The darkness where my fears reside,
+The light where all my hopes abide.
+
+I walk the line between the two,
+Discovering what is false and true.
+In shadows, lessons I am learning,
+Toward the light, my spirit turning.`,
+                color: "#8b7355"
+            },
+            {
+                id: 8,
+                title: "FADING EMBERS",
+                theme: "melancholy",
+                content: `The dying glow of what once burned,
+For lessons learned and bridges turned.
+The cooling ashes of desire,
+The embers of a former fire.
+
+Yet in the grey, a warmth remains,
+A memory that softly stains.
+What once was bright now fades to grey,
+But taught my heart to find its way.`,
+                color: "#8b7355"
+            }
+        ];
+
+        // Themes data
+        const themes = [
+            { id: "love", name: "LOVE", icon: "fas fa-heart" },
+            { id: "nature", name: "NATURE", icon: "fas fa-leaf" },
+            { id: "introspection", name: "REFLECTION", icon: "fas fa-brain" },
+            { id: "melancholy", name: "LONGING", icon: "fas fa-cloud" }
         ];
 
         // DOM elements
         const mindmapEl = document.getElementById('mindmap');
-        const poemForm = document.getElementById('poem-form');
-        const poemTitleInput = document.getElementById('poem-title');
-        const poemThemeInput = document.getElementById('poem-theme');
-        const poemNotesInput = document.getElementById('poem-notes');
-        const resetBtn = document.getElementById('reset-btn');
-        const poemDetailsContainer = document.getElementById('poem-details');
-        const saveBtn = document.getElementById('save-btn');
+        const poemDisplayContent = document.getElementById('poem-display-content');
+        const themeButtons = document.querySelectorAll('.type-btn');
         
-        // State variables
-        let nextId = poems.length + 1;
-        let selectedPoemId = null;
-        let isDragging = false;
-        let dragStartX, dragStartY;
-        let offsetX = 0, offsetY = 0;
-        let scale = 1;
-        let isPanning = false;
-        let panStartX, panStartY;
+        // Current active theme
+        let activeTheme = 'all';
+        
+        // Typewriter effect variables
+        let isTyping = false;
+        let currentPoemDisplay = '';
         
         // Initialize mind map
         function initMindMap() {
-            // Clear mind map
+            // Clear previous mind map
             mindmapEl.innerHTML = '';
             
-            // Set mind map dimensions
-            mindmapEl.style.width = "2000px";
-            mindmapEl.style.height = "1500px";
-            mindmapEl.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
-            mindmapEl.style.transformOrigin = "0 0";
+            // Create central node
+            const centerX = mindmapEl.clientWidth / 2;
+            const centerY = mindmapEl.clientHeight / 2;
             
-            // Add center node
-            const centerX = 1000;
-            const centerY = 750;
-            createNode('center', centerX, centerY, 'Poetry Collection', 'fas fa-book', 'node-center');
+            createNode('center', centerX, centerY, 'POEMS', 'fas fa-feather-alt', 'node-core');
             
-            // Add poem nodes
-            poems.forEach(poem => {
-                createPoemNode(poem);
+            // Create theme nodes
+            const themeRadius = Math.min(mindmapEl.clientWidth, mindmapEl.clientHeight) * 0.3;
+            const themeAngleStep = (2 * Math.PI) / themes.length;
+            
+            themes.forEach((theme, index) => {
+                const angle = index * themeAngleStep;
+                const x = centerX + themeRadius * Math.cos(angle);
+                const y = centerY + themeRadius * Math.sin(angle);
+                
+                createNode(theme.id, x, y, theme.name, theme.icon, 'node-theme');
+                
+                // Connect theme to center
+                createConnection(centerX, centerY, x, y);
+                
+                // Create poem nodes for this theme
+                const themePoems = poems.filter(poem => poem.theme === theme.id);
+                const poemRadius = themeRadius * 0.5;
+                const poemAngleStep = (2 * Math.PI) / themePoems.length;
+                
+                themePoems.forEach((poem, poemIndex) => {
+                    const poemAngle = angle + (poemIndex - (themePoems.length-1)/2) * poemAngleStep * 0.7;
+                    const poemX = x + poemRadius * Math.cos(poemAngle);
+                    const poemY = y + poemRadius * Math.sin(poemAngle);
+                    
+                    createNode(`poem-${poem.id}`, poemX, poemY, poem.title, 'fas fa-file-alt', 'node-poem');
+                    
+                    // Connect poem to theme
+                    createConnection(x, y, poemX, poemY);
+                });
             });
             
-            // Draw connections from center to each poem
-            poems.forEach(poem => {
-                createConnection(centerX, centerY, poem.x, poem.y);
-            });
-            
-            // Add event listeners for dragging and panning
-            setupInteractivity();
-            
-            // If a poem is selected, highlight it
-            if (selectedPoemId) {
-                const selectedNode = document.getElementById(`poem-${selectedPoemId}`);
-                if (selectedNode) {
-                    selectedNode.classList.add('active');
-                }
-            }
+            // Add event listeners to nodes
+            addNodeEventListeners();
         }
         
-        // Create a poem node
-        function createPoemNode(poem) {
+        // Create a node element
+        function createNode(id, x, y, text, icon, className) {
             const node = document.createElement('div');
-            node.id = `poem-${poem.id}`;
-            node.className = 'node';
-            node.style.left = `${poem.x}px`;
-            node.style.top = `${poem.y}px`;
-            node.dataset.id = poem.id;
+            node.id = id;
+            node.className = `node ${className}`;
+            node.style.left = `${x}px`;
+            node.style.top = `${y}px`;
             
             node.innerHTML = `
-                <div class="node-title">${poem.title}</div>
-                <div class="node-meta">${poem.theme || 'No theme'}</div>
-                <div class="node-notes">${poem.notes || 'No notes yet'}</div>
+                <i class="${icon}"></i>
+                <span>${text}</span>
             `;
             
             mindmapEl.appendChild(node);
             
-            // Adjust position to account for node dimensions
+            // Adjust position to center the node
             const nodeWidth = node.offsetWidth;
             const nodeHeight = node.offsetHeight;
-            node.style.left = `${poem.x - nodeWidth/2}px`;
-            node.style.top = `${poem.y - nodeHeight/2}px`;
+            node.style.left = `${x - nodeWidth/2}px`;
+            node.style.top = `${y - nodeHeight/2}px`;
             
             return node;
         }
         
-        // Create a connection line
+        // Create a connection line between two points
         function createConnection(x1, y1, x2, y2) {
             const connection = document.createElement('div');
             connection.className = 'connection';
@@ -471,348 +626,185 @@
             mindmapEl.appendChild(connection);
         }
         
-        // Setup interactivity (dragging nodes, panning)
-        function setupInteractivity() {
-            const nodes = document.querySelectorAll('.node:not(.node-center)');
+        // Typewriter effect for displaying poems
+        function typewriterEffect(text, element, speed = 30) {
+            if (isTyping) return;
             
-            // Node click event
+            isTyping = true;
+            element.innerHTML = '';
+            let i = 0;
+            currentPoemDisplay = '';
+            
+            function typeWriter() {
+                if (i < text.length) {
+                    currentPoemDisplay += text.charAt(i);
+                    element.innerHTML = currentPoemDisplay;
+                    i++;
+                    setTimeout(typeWriter, speed);
+                } else {
+                    isTyping = false;
+                }
+            }
+            
+            typeWriter();
+        }
+        
+        // Add event listeners to nodes
+        function addNodeEventListeners() {
+            const nodes = document.querySelectorAll('.node');
+            
             nodes.forEach(node => {
-                node.addEventListener('click', function(e) {
-                    e.stopPropagation();
+                node.addEventListener('click', function() {
+                    const nodeId = this.id;
                     
                     // Remove active class from all nodes
-                    document.querySelectorAll('.node').forEach(n => n.classList.remove('active'));
+                    nodes.forEach(n => n.classList.remove('active'));
                     
                     // Add active class to clicked node
                     this.classList.add('active');
                     
-                    // Get poem data
-                    const poemId = parseInt(this.dataset.id);
-                    selectedPoemId = poemId;
-                    const poem = poems.find(p => p.id === poemId);
-                    
-                    if (poem) {
-                        // Update form with poem data
-                        poemTitleInput.value = poem.title;
-                        poemThemeInput.value = poem.theme || '';
-                        poemNotesInput.value = poem.notes || '';
+                    // Show content based on node type
+                    if (nodeId.startsWith('poem-')) {
+                        const poemId = parseInt(nodeId.split('-')[1]);
+                        const poem = poems.find(p => p.id === poemId);
                         
-                        // Update details panel
-                        updateDetailsPanel(poem);
+                        if (poem) {
+                            const theme = themes.find(t => t.id === poem.theme);
+                            
+                            // Prepare poem display with typewriter effect
+                            const displayHTML = `
+                                <div class="poem-title">${poem.title}</div>
+                                <div class="poem-content" id="typing-area"></div>
+                                <div class="poem-meta">THEME: ${theme ? theme.name : 'GENERAL'}</div>
+                            `;
+                            
+                            poemDisplayContent.innerHTML = displayHTML;
+                            
+                            // Use typewriter effect for the poem content
+                            const typingArea = document.getElementById('typing-area');
+                            typewriterEffect(poem.content, typingArea, 40);
+                        }
+                    } else if (nodeId === 'center') {
+                        const displayHTML = `
+                            <div class="poem-title">POETRY MAP</div>
+                            <div class="poem-content">
+                                <p>A network of ${poems.length} poems organized around ${themes.length} central themes.</p>
+                                <p style="margin-top: 15px;">Each connection represents the relationship between poems and their thematic elements.</p>
+                                <p style="margin-top: 15px;">Click on any poem node to read it with a typewriter effect.</p>
+                            </div>
+                            <div class="poem-meta">AN INTERACTIVE TYPEWRITER-STYLE NETWORK</div>
+                        `;
                         
-                        // Update button text
-                        saveBtn.textContent = 'Update Poem';
+                        poemDisplayContent.innerHTML = displayHTML;
+                    } else {
+                        // It's a theme node
+                        const theme = themes.find(t => t.id === nodeId);
+                        if (theme) {
+                            const themePoems = poems.filter(poem => poem.theme === theme.id);
+                            
+                            let poemsHTML = `<p>This theme includes ${themePoems.length} poems exploring ${theme.name.toLowerCase()}.</p>`;
+                            poemsHTML += '<div style="margin-top: 20px;">';
+                            themePoems.forEach(poem => {
+                                poemsHTML += `<div style="margin-bottom: 10px; padding-left: 10px; border-left: 2px solid #d4c4a8;">`;
+                                poemsHTML += `<strong>${poem.title}</strong> - Click the node to read</div>`;
+                            });
+                            poemsHTML += '</div>';
+                            
+                            const displayHTML = `
+                                <div class="poem-title">${theme.name} THEME</div>
+                                <div class="poem-content">
+                                    ${poemsHTML}
+                                </div>
+                                <div class="poem-meta">${themePoems.length} POEMS IN THIS CATEGORY</div>
+                            `;
+                            
+                            poemDisplayContent.innerHTML = displayHTML;
+                        }
                     }
                 });
-                
-                // Node dragging
-                let isDraggingNode = false;
-                let startX, startY, initialLeft, initialTop;
-                
-                node.addEventListener('mousedown', function(e) {
-                    e.stopPropagation();
-                    isDraggingNode = true;
-                    startX = e.clientX;
-                    startY = e.clientY;
-                    
-                    const rect = this.getBoundingClientRect();
-                    initialLeft = parseFloat(this.style.left);
-                    initialTop = parseFloat(this.style.top);
-                    
-                    // Bring to front
-                    this.style.zIndex = '1000';
-                    
-                    document.addEventListener('mousemove', onMouseMove);
-                    document.addEventListener('mouseup', onMouseUp);
-                });
-                
-                function onMouseMove(e) {
-                    if (!isDraggingNode) return;
-                    
-                    const dx = e.clientX - startX;
-                    const dy = e.clientY - startY;
-                    
-                    node.style.left = `${initialLeft + dx}px`;
-                    node.style.top = `${initialTop + dy}px`;
-                    
-                    // Update poem position in data
-                    const poemId = parseInt(node.dataset.id);
-                    const poem = poems.find(p => p.id === poemId);
-                    if (poem) {
-                        const nodeWidth = node.offsetWidth;
-                        const nodeHeight = node.offsetHeight;
-                        poem.x = initialLeft + dx + nodeWidth/2;
-                        poem.y = initialTop + dy + nodeHeight/2;
-                        
-                        // Redraw connections
-                        redrawConnections();
-                    }
-                }
-                
-                function onMouseUp() {
-                    isDraggingNode = false;
-                    node.style.zIndex = '10';
-                    document.removeEventListener('mousemove', onMouseMove);
-                    document.removeEventListener('mouseup', onMouseUp);
-                }
             });
+        }
+        
+        // Filter poems by theme
+        function filterByTheme(theme) {
+            activeTheme = theme;
             
-            // Center node click
-            const centerNode = document.querySelector('.node-center');
-            if (centerNode) {
-                centerNode.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    
-                    // Remove active class from all nodes
-                    document.querySelectorAll('.node').forEach(n => n.classList.remove('active'));
-                    
-                    // Add active class to center
-                    this.classList.add('active');
-                    
-                    // Clear form
-                    resetForm();
-                    
-                    // Update details panel
-                    poemDetailsContainer.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-book"></i>
-                            <p>Your poetry collection center</p>
-                            <p style="margin-top: 10px; font-size: 0.9rem;">${poems.length} poems organized in the mind map</p>
-                        </div>
-                    `;
-                    
-                    // Update button text
-                    saveBtn.textContent = 'Add Poem';
-                    selectedPoemId = null;
-                });
-            }
-            
-            // Panning the mind map
-            mindmapEl.addEventListener('mousedown', function(e) {
-                if (e.target === mindmapEl) {
-                    isPanning = true;
-                    panStartX = e.clientX - offsetX;
-                    panStartY = e.clientY - offsetY;
-                    mindmapEl.style.cursor = 'grabbing';
-                }
-            });
-            
-            document.addEventListener('mousemove', function(e) {
-                if (!isPanning) return;
-                
-                offsetX = e.clientX - panStartX;
-                offsetY = e.clientY - panStartY;
-                mindmapEl.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
-            });
-            
-            document.addEventListener('mouseup', function() {
-                isPanning = false;
-                mindmapEl.style.cursor = 'default';
-            });
-            
-            // Zoom with mouse wheel
-            mindmapEl.addEventListener('wheel', function(e) {
-                e.preventDefault();
-                
-                const zoomIntensity = 0.1;
-                const oldScale = scale;
-                
-                // Determine zoom direction
-                if (e.deltaY < 0) {
-                    scale *= (1 + zoomIntensity);
+            // Update button states
+            themeButtons.forEach(btn => {
+                if (btn.dataset.theme === theme) {
+                    btn.classList.add('active');
                 } else {
-                    scale *= (1 - zoomIntensity);
+                    btn.classList.remove('active');
                 }
-                
-                // Limit zoom range
-                scale = Math.min(Math.max(0.5, scale), 3);
-                
-                // Adjust offset to zoom toward cursor
-                const rect = mindmapEl.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left;
-                const mouseY = e.clientY - rect.top;
-                
-                offsetX = mouseX - (mouseX - offsetX) * (scale / oldScale);
-                offsetY = mouseY - (mouseY - offsetY) * (scale / oldScale);
-                
-                mindmapEl.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
             });
-        }
-        
-        // Redraw connections when nodes are moved
-        function redrawConnections() {
-            // Remove all connections
-            const connections = document.querySelectorAll('.connection');
-            connections.forEach(conn => conn.remove());
             
-            // Get center position
-            const centerNode = document.querySelector('.node-center');
-            const centerRect = centerNode.getBoundingClientRect();
-            const centerX = parseFloat(centerNode.style.left) + centerRect.width/2;
-            const centerY = parseFloat(centerNode.style.top) + centerRect.height/2;
+            // Hide/show nodes based on theme
+            const allNodes = document.querySelectorAll('.node');
+            const allConnections = document.querySelectorAll('.connection');
             
-            // Redraw connections from center to each poem
-            poems.forEach(poem => {
-                createConnection(centerX, centerY, poem.x, poem.y);
-            });
-        }
-        
-        // Update details panel with poem info
-        function updateDetailsPanel(poem) {
-            poemDetailsContainer.innerHTML = `
-                <div class="detail-item">
-                    <div class="detail-label">Title</div>
-                    <div class="detail-content">${poem.title}</div>
-                </div>
+            if (theme === 'all') {
+                // Show all nodes and connections
+                allNodes.forEach(node => {
+                    node.style.opacity = '1';
+                    node.style.display = 'flex';
+                });
+                allConnections.forEach(conn => {
+                    conn.style.opacity = '0.6';
+                });
+            } else {
+                // Show only theme node and its poems
+                allNodes.forEach(node => {
+                    if (node.id === 'center' || node.id === theme || node.id.startsWith(`poem-`)) {
+                        const poemId = node.id.startsWith('poem-') ? parseInt(node.id.split('-')[1]) : null;
+                        const poem = poemId ? poems.find(p => p.id === poemId) : null;
+                        
+                        if (node.id === 'center' || node.id === theme || (poem && poem.theme === theme)) {
+                            node.style.opacity = '1';
+                            node.style.display = 'flex';
+                        } else {
+                            node.style.opacity = '0.3';
+                            node.style.display = 'flex';
+                        }
+                    } else {
+                        node.style.opacity = '0.3';
+                        node.style.display = 'flex';
+                    }
+                });
                 
-                <div class="detail-item">
-                    <div class="detail-label">Theme/Category</div>
-                    <div class="detail-content">${poem.theme || 'Not specified'}</div>
-                </div>
-                
-                <div class="detail-item">
-                    <div class="detail-label">Notes</div>
-                    <div class="detail-content">${poem.notes || 'No notes added yet'}</div>
-                </div>
-                
-                <div class="detail-item">
-                    <div class="detail-label">ID</div>
-                    <div class="detail-content">${poem.id}</div>
-                </div>
-            `;
-        }
-        
-        // Reset form
-        function resetForm() {
-            poemTitleInput.value = '';
-            poemThemeInput.value = '';
-            poemNotesInput.value = '';
-            selectedPoemId = null;
-            saveBtn.textContent = 'Add Poem';
-            
-            // Remove active class from all nodes
-            document.querySelectorAll('.node').forEach(n => n.classList.remove('active'));
-        }
-        
-        // Save/update poem
-        poemForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const title = poemTitleInput.value.trim();
-            const theme = poemThemeInput.value.trim();
-            const notes = poemNotesInput.value.trim();
-            
-            if (!title) {
-                alert('Please enter a poem title');
-                return;
+                // Adjust connection visibility
+                allConnections.forEach(conn => {
+                    conn.style.opacity = '0.2';
+                });
             }
             
-            if (selectedPoemId) {
-                // Update existing poem
-                const poemIndex = poems.findIndex(p => p.id === selectedPoemId);
-                if (poemIndex !== -1) {
-                    poems[poemIndex].title = title;
-                    poems[poemIndex].theme = theme;
-                    poems[poemIndex].notes = notes;
-                    
-                    // Update the node
-                    const node = document.getElementById(`poem-${selectedPoemId}`);
-                    if (node) {
-                        node.querySelector('.node-title').textContent = title;
-                        node.querySelector('.node-meta').textContent = theme || 'No theme';
-                        node.querySelector('.node-notes').textContent = notes || 'No notes yet';
-                    }
-                    
-                    // Update details panel
-                    updateDetailsPanel(poems[poemIndex]);
-                    
-                    alert('Poem updated successfully!');
+            // If a theme node was clicked, show its content
+            if (theme !== 'all') {
+                const themeNode = document.getElementById(theme);
+                if (themeNode) {
+                    themeNode.click();
                 }
             } else {
-                // Add new poem
-                const newPoem = {
-                    id: nextId++,
-                    title,
-                    theme,
-                    notes,
-                    x: 700 + (Math.random() * 200 - 100), // Random position near center
-                    y: 500 + (Math.random() * 200 - 100)
-                };
-                
-                poems.push(newPoem);
-                
-                // Create node
-                createPoemNode(newPoem);
-                
-                // Redraw connections
-                redrawConnections();
-                
-                // Reset form
-                resetForm();
-                
-                // Select the new node
-                setTimeout(() => {
-                    const newNode = document.getElementById(`poem-${newPoem.id}`);
-                    if (newNode) {
-                        newNode.click();
-                    }
-                }, 100);
-                
-                alert('Poem added successfully!');
-            }
-        });
-        
-        // Reset button
-        resetBtn.addEventListener('click', resetForm);
-        
-        // Double-click on mind map to add a new poem at that position
-        mindmapEl.addEventListener('dblclick', function(e) {
-            if (e.target === mindmapEl) {
-                // Calculate position relative to mind map
-                const rect = mindmapEl.getBoundingClientRect();
-                const x = (e.clientX - rect.left - offsetX) / scale;
-                const y = (e.clientY - rect.top - offsetY) / scale;
-                
-                // Prompt for poem title
-                const title = prompt('Enter poem title:');
-                if (title && title.trim()) {
-                    const newPoem = {
-                        id: nextId++,
-                        title: title.trim(),
-                        theme: '',
-                        notes: '',
-                        x: x,
-                        y: y
-                    };
-                    
-                    poems.push(newPoem);
-                    
-                    // Create node
-                    createPoemNode(newPoem);
-                    
-                    // Redraw connections
-                    redrawConnections();
-                    
-                    // Select the new node
-                    setTimeout(() => {
-                        const newNode = document.getElementById(`poem-${newPoem.id}`);
-                        if (newNode) {
-                            newNode.click();
-                        }
-                    }, 100);
+                // Show center node content
+                const centerNode = document.getElementById('center');
+                if (centerNode) {
+                    centerNode.click();
                 }
             }
+        }
+        
+        // Add event listeners to theme buttons
+        themeButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const theme = this.dataset.theme;
+                filterByTheme(theme);
+            });
         });
         
-        // Initialize on page load
+        // Initialize the mind map when page loads
         window.addEventListener('load', initMindMap);
         
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            // In a real app, you might want to adjust node positions
-            // For simplicity, we'll just reinitialize
-            initMindMap();
-        });
+        // Reinitialize mind map on window resize
+        window.addEventListener('resize', initMindMap);
     </script>
 </body>
 </html>
