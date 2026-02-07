@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ME, MYSELF & I</title>
+    <title>Sacred Verses</title>
     <style>
         * {
             margin: 0;
@@ -12,865 +12,750 @@
         }
         
         body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'IBM Plex Mono', monospace;
-            line-height: 1.7;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
             min-height: 100vh;
-            letter-spacing: 0.3px;
         }
         
         .container {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            height: 100vh;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
         
-        /* Sidebar - The Cool One */
-        .sidebar {
-            background: linear-gradient(180deg, #0a0a0a 0%, #111 100%);
-            border-right: 1px solid #222;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .brand {
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 40px;
+        /* Header */
+        header {
             text-align: center;
-            letter-spacing: 3px;
+            padding: 40px 0;
+            border-bottom: 1px solid #333;
+            margin-bottom: 40px;
+            position: relative;
         }
         
-        /* Main Navigation - ME, MYSELF & I */
+        .site-title {
+            font-size: 2.5em;
+            color: #fff;
+            margin-bottom: 10px;
+            font-family: 'Times New Roman', serif;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            color: #aaa;
+            font-size: 1.1em;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+        
+        /* Navigation */
         .main-nav {
             display: flex;
-            flex-direction: column;
-            gap: 2px;
+            justify-content: center;
+            gap: 30px;
             margin-bottom: 40px;
+            flex-wrap: wrap;
         }
         
-        .nav-item {
-            padding: 18px 20px;
+        .nav-btn {
             background: transparent;
-            border: 1px solid #222;
-            color: #888;
-            font-size: 0.95em;
+            border: 1px solid #444;
+            color: #ccc;
+            padding: 12px 25px;
+            font-family: 'Georgia', serif;
+            font-size: 1em;
             cursor: pointer;
             transition: all 0.3s;
-            text-align: left;
-            letter-spacing: 1px;
             position: relative;
-            overflow: hidden;
         }
         
-        .nav-item:hover {
-            color: #fff;
-            border-color: #444;
-            background: rgba(255, 255, 255, 0.02);
-        }
-        
-        .nav-item.active {
-            color: #fff;
+        .nav-btn:hover {
             border-color: #666;
-            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
         }
         
-        .nav-item.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 3px;
-            background: #fff;
+        .nav-btn.active {
+            border-color: #8b7355;
+            color: #d4af37;
+            background: rgba(139, 115, 85, 0.1);
         }
         
-        .nav-number {
+        /* Cross Divider */
+        .cross-divider {
+            text-align: center;
+            margin: 30px 0;
             color: #666;
-            margin-right: 10px;
-            font-size: 0.8em;
+            font-size: 1.5em;
+            letter-spacing: 10px;
         }
         
-        /* Poem List */
+        /* Content Layout */
+        .content-area {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 40px;
+            min-height: 70vh;
+        }
+        
+        /* Sidebar - Poem List */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #333;
+            padding: 25px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .section-title {
+            font-size: 1.1em;
+            color: #d4af37;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
         .poem-list {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 10px;
+            list-style: none;
         }
         
         .poem-item {
-            padding: 16px;
-            margin-bottom: 6px;
-            background: rgba(255, 255, 255, 0.02);
+            padding: 15px;
+            margin-bottom: 10px;
             border: 1px solid transparent;
             cursor: pointer;
             transition: all 0.3s;
-            opacity: 0.7;
+            background: rgba(255, 255, 255, 0.02);
         }
         
         .poem-item:hover {
-            opacity: 1;
+            border-color: #555;
             background: rgba(255, 255, 255, 0.05);
-            border-color: #333;
         }
         
         .poem-item.active {
-            opacity: 1;
-            background: rgba(255, 255, 255, 0.08);
-            border-color: #555;
-            color: #fff;
+            border-color: #8b7355;
+            background: rgba(139, 115, 85, 0.1);
         }
         
-        .poem-title {
-            font-size: 0.95em;
+        .poem-item-title {
+            font-size: 1.1em;
             margin-bottom: 5px;
-        }
-        
-        .poem-meta {
-            font-size: 0.75em;
-            color: #666;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        /* Main Content - Terminal Style */
-        .main {
-            background: #000;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-        
-        .header {
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #222;
-        }
-        
-        .path {
-            font-size: 0.8em;
-            color: #666;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-        
-        .current-poem {
-            font-size: 2em;
             color: #fff;
-            font-weight: 300;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
         }
         
-        .date {
+        .poem-item-meta {
             font-size: 0.85em;
             color: #888;
+            font-style: italic;
         }
         
-        /* Typewriter Area */
-        .typewriter-area {
-            flex: 1;
-            position: relative;
-        }
-        
-        .typewriter {
-            position: relative;
-            min-height: 300px;
-            padding-left: 20px;
-        }
-        
-        .line {
-            margin-bottom: 1.8em;
-            opacity: 0;
-            transform: translateY(10px);
-            animation: appear 0.5s forwards;
-            color: #ccc;
-            font-size: 1.05em;
-            letter-spacing: 0.5px;
-        }
-        
-        @keyframes appear {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .cursor {
-            display: inline-block;
-            width: 3px;
-            height: 1.4em;
-            background: #fff;
-            margin-left: 5px;
-            animation: blink 1s infinite;
-            vertical-align: middle;
-        }
-        
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-        
-        /* Controls - Minimal */
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid #222;
-        }
-        
-        .control-btn {
-            background: transparent;
-            border: 1px solid #333;
-            color: #888;
-            padding: 12px 24px;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.85em;
-            cursor: pointer;
-            transition: all 0.3s;
-            letter-spacing: 1px;
-        }
-        
-        .control-btn:hover {
-            border-color: #666;
-            color: #fff;
-        }
-        
-        .control-btn.active {
-            border-color: #888;
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        /* Stats - Subtle */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 40px;
-            padding: 20px;
+        /* Main Content - Poem Display */
+        .poem-display {
+            padding: 30px;
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid #222;
+            border: 1px solid #333;
         }
         
-        .stat-item {
+        .poem-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #444;
             text-align: center;
         }
         
-        .stat-number {
-            font-size: 1.5em;
+        .poem-title {
+            font-size: 2em;
             color: #fff;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            font-family: 'Times New Roman', serif;
         }
         
-        .stat-label {
-            font-size: 0.75em;
+        .poem-reference {
+            color: #d4af37;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        
+        .poem-content {
+            font-size: 1.1em;
+            line-height: 1.9;
+            white-space: pre-line;
+            color: #ccc;
+        }
+        
+        .poem-stanza {
+            margin-bottom: 30px;
+        }
+        
+        .poem-image {
+            width: 100%;
+            height: 300px;
+            background: #1a1a1a;
+            margin: 30px 0;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .poem-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+        
+        .image-placeholder {
             color: #666;
-            letter-spacing: 1px;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        
+        .image-placeholder i {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 20px;
+            color: #444;
+        }
+        
+        /* Add Poem Form */
+        .add-poem-form {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid #333;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .form-title {
+            color: #d4af37;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #444;
+            color: #fff;
+            font-family: 'Georgia', serif;
+            font-size: 1em;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-btn {
+            background: #8b7355;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-family: 'Georgia', serif;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .form-btn:hover {
+            background: #9c8160;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+            border-top: 1px solid #333;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .verse {
+            font-style: italic;
+            color: #888;
+            margin: 20px 0;
         }
         
         /* Responsive */
         @media (max-width: 900px) {
-            .container {
+            .content-area {
                 grid-template-columns: 1fr;
-                height: auto;
             }
             
             .sidebar {
-                height: auto;
-                border-right: none;
-                border-bottom: 1px solid #222;
+                position: static;
             }
             
-            .main {
-                padding: 30px 20px;
+            .main-nav {
+                gap: 10px;
             }
             
-            .stats {
-                grid-template-columns: 1fr;
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
             }
         }
         
         /* Scrollbar */
         ::-webkit-scrollbar {
-            width: 3px;
+            width: 8px;
         }
         
         ::-webkit-scrollbar-track {
-            background: #111;
+            background: #1a1a1a;
         }
         
         ::-webkit-scrollbar-thumb {
             background: #444;
+            border-radius: 4px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
-            background: #666;
+            background: #555;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="brand">POETRY ARCHIVE</div>
+        <header>
+            <h1 class="site-title">SACRED VERSES</h1>
+            <div class="subtitle">Christian Poetry & Reflections</div>
+            
+            <div class="cross-divider">
+                ✝ ✝ ✝
+            </div>
             
             <div class="main-nav">
-                <button class="nav-item active" data-section="me">
-                    <span class="nav-number">01</span>ME
-                </button>
-                <button class="nav-item" data-section="myself">
-                    <span class="nav-number">02</span>MYSELF
-                </button>
-                <button class="nav-item" data-section="i">
-                    <span class="nav-number">03</span>I
-                </button>
+                <button class="nav-btn active" data-category="redemption">Redemption</button>
+                <button class="nav-btn" data-category="grace">Grace</button>
+                <button class="nav-btn" data-category="faith">Faith</button>
+                <button class="nav-btn" data-category="hope">Hope</button>
+                <button class="nav-btn" data-category="love">Love</button>
+            </div>
+        </header>
+        
+        <div class="content-area">
+            <!-- Sidebar with Poem List -->
+            <div class="sidebar">
+                <div class="section-title">Poems in Collection</div>
+                <ul class="poem-list" id="poemList">
+                    <!-- Poems will be loaded here -->
+                </ul>
+                
+                <div style="margin-top: 30px; text-align: center;">
+                    <div style="color: #666; font-size: 0.9em; margin-bottom: 15px;">
+                        <i class="fas fa-angel"></i>
+                        <div>Total Poems: <span id="poemCount">0</span></div>
+                    </div>
+                </div>
             </div>
             
-            <div class="poem-list" id="poemList">
-                <!-- Poems will load here -->
-            </div>
-            
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number" id="totalPoems">0</div>
-                    <div class="stat-label">POEMS</div>
+            <!-- Main Poem Display -->
+            <div class="poem-display">
+                <div class="poem-header">
+                    <h2 class="poem-title" id="displayTitle">Select a Poem</h2>
+                    <div class="poem-reference" id="displayReference"></div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="totalLines">0</div>
-                    <div class="stat-label">LINES</div>
+                
+                <div class="poem-image" id="poemImage">
+                    <div class="image-placeholder">
+                        <i class="fas fa-cross"></i>
+                        Select a poem to view its image
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="currentSection">ME</div>
-                    <div class="stat-label">ACTIVE</div>
+                
+                <div class="poem-content" id="poemContent">
+                    Select a poem from the list to read it here.
                 </div>
             </div>
         </div>
         
-        <!-- Main Content -->
-        <div class="main">
-            <div class="header">
-                <div class="path" id="path">/me/</div>
-                <h1 class="current-poem" id="currentPoemTitle">Untitled</h1>
-                <div class="date" id="currentDate">—</div>
-            </div>
-            
-            <div class="typewriter-area">
-                <div class="typewriter" id="typewriter">
-                    <!-- Typewriter content -->
+        <!-- Add New Poem Form -->
+        <div class="add-poem-form" id="addPoemForm">
+            <h3 class="form-title">Add New Poem</h3>
+            <form id="poemForm">
+                <div class="form-group">
+                    <label for="poemTitle">Poem Title</label>
+                    <input type="text" id="poemTitle" required>
                 </div>
-            </div>
-            
-            <div class="controls">
-                <button class="control-btn" id="prevBtn">◄ PREV</button>
-                <button class="control-btn" id="nextBtn">NEXT ►</button>
-                <button class="control-btn active" id="playBtn">▶ PLAY</button>
-                <button class="control-btn" id="pauseBtn">⏸ PAUSE</button>
-                <button class="control-btn" id="speedBtn">NORMAL</button>
-            </div>
+                
+                <div class="form-group">
+                    <label for="poemCategory">Category</label>
+                    <select id="poemCategory" required>
+                        <option value="redemption">Redemption</option>
+                        <option value="grace">Grace</option>
+                        <option value="faith">Faith</option>
+                        <option value="hope">Hope</option>
+                        <option value="love">Love</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="poemReference">Scripture Reference (optional)</label>
+                    <input type="text" id="poemReference" placeholder="e.g., John 3:16">
+                </div>
+                
+                <div class="form-group">
+                    <label for="poemContentInput">Poem Content (use empty lines for stanzas)</label>
+                    <textarea id="poemContentInput" required placeholder="Write your poem here...
+                    
+Use empty lines to separate stanzas."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="poemImageUrl">Image URL (optional)</label>
+                    <input type="text" id="poemImageUrl" placeholder="Paste image URL of angel, cross, etc.">
+                    <small style="color: #666; display: block; margin-top: 5px;">
+                        Find images on Unsplash: "angel", "cross", "stained glass", "bible"
+                    </small>
+                </div>
+                
+                <button type="submit" class="form-btn">Add Poem to Collection</button>
+            </form>
         </div>
+        
+        <footer>
+            <div class="verse">
+                "Your word is a lamp to my feet and a light to my path." — Psalm 119:105
+            </div>
+            <div>
+                Sacred Verses Poetry Archive • All glory to God
+            </div>
+        </footer>
     </div>
 
     <script>
-        // Poetry Archive - ME, MYSELF & I
-        const poetryArchive = {
-            me: [
-                {
-                    id: 1,
-                    title: "THE BODY REMEMBERS",
-                    lines: [
-                        "Skin keeps score in pale lines,",
-                        "Muscles hold tension like memory,",
-                        "Bones ache with old weather.",
-                        "",
-                        "This architecture of flesh,",
-                        "Temporary housing for consciousness,",
-                        "Already decaying as it breathes.",
-                        "",
-                        "Scars are stories written",
-                        "In a language only touch understands,",
-                        "And the body never forgets."
-                    ],
-                    date: "DEC 23",
-                    theme: "Physical"
-                },
-                {
-                    id: 2,
-                    title: "ANATOMY OF DESIRE",
-                    lines: [
-                        "Pulse points and pressure,",
-                        "The machinery of want",
-                        "Clicking behind ribs.",
-                        "",
-                        "Blood rushing to surfaces,",
-                        "Skin anticipating touch,",
-                        "A whole system wired",
-                        "",
-                        "For connection,",
-                        "For consumption,",
-                        "For collapse into another.",
-                        "",
-                        "The physics of proximity,",
-                        "The chemistry of skin."
-                    ],
-                    date: "JAN 24",
-                    theme: "Desire"
-                },
-                {
-                    id: 3,
-                    title: "METABOLISM",
-                    lines: [
-                        "Converting coffee to thought,",
-                        "Bread to energy,",
-                        "Wine to melancholy.",
-                        "",
-                        "This chemical exchange,",
-                        "This slow burn of being,",
-                        "Calories turning to consciousness.",
-                        "",
-                        "What enters becomes",
-                        "Part of the machinery,",
-                        "Fuel for the temporary fire",
-                        "",
-                        "That keeps this vessel",
-                        "Warm and moving",
-                        "Toward its inevitable cooling."
-                    ],
-                    date: "FEB 24",
-                    theme: "Process"
-                }
-            ],
-            myself: [
-                {
-                    id: 4,
-                    title: "INTERIOR WEATHER",
-                    lines: [
-                        "Clouds gather behind eyes,",
-                        "Pressure systems in the chest,",
-                        "Storms that never break,",
-                        "Only rumble in the distance.",
-                        "",
-                        "This climate of the self,",
-                        "Seasons changing without sun,",
-                        "Winters of the heart,",
-                        "Long summers of contentment.",
-                        "",
-                        "I am the landscape",
-                        "And the weather,",
-                        "The storm and the calm after."
-                    ],
-                    date: "MAR 24",
-                    theme: "Emotion"
-                },
-                {
-                    id: 5,
-                    title: "THE ECHO CHAMBER",
-                    lines: [
-                        "Thoughts bounce off bone,",
-                        "Returning changed,",
-                        "Familiar but strange.",
-                        "",
-                        "This endless conversation",
-                        "With versions of myself,",
-                        "Past and future ghosts",
-                        "",
-                        "Haunting the present.",
-                        "I am the speaker",
-                        "And the listener,",
-                        "",
-                        "The question",
-                        "And the silence",
-                        "That follows."
-                    ],
-                    date: "APR 24",
-                    theme: "Thought"
-                },
-                {
-                    id: 6,
-                    title: "SELF-PORTRAIT IN RUINS",
-                    lines: [
-                        "Broken things I've mended,",
-                        "Cracks filled with gold,",
-                        "Aesthetics of damage.",
-                        "",
-                        "This art of falling apart",
-                        "And reassembling,",
-                        "Never quite the same,",
-                        "",
-                        "Always carrying",
-                        "The evidence of breakage,",
-                        "The beautiful ruin",
-                        "",
-                        "Of having survived",
-                        "My own becoming."
-                    ],
-                    date: "MAY 24",
-                    theme: "Identity"
-                }
-            ],
-            i: [
-                {
-                    id: 7,
-                    title: "THE WITNESS",
-                    lines: [
-                        "Something watches",
-                        "From behind these eyes,",
-                        "Not the thinker,",
-                        "Not the feeler,",
-                        "",
-                        "But the one who sees",
-                        "The thinking and feeling,",
-                        "The silent observer",
-                        "",
-                        "In the theater of self.",
-                        "Consciousness aware",
-                        "Of its own awareness,",
-                        "",
-                        "A hall of mirrors",
-                        "With no original,",
-                        "Only reflections."
-                    ],
-                    date: "JUN 24",
-                    theme: "Consciousness"
-                },
-                {
-                    id: 8,
-                    title: "ETERNAL FRAGMENT",
-                    lines: [
-                        "A piece of forever",
-                        "Dressed in temporary,",
-                        "Playing at mortality",
-                        "For a little while.",
-                        "",
-                        "This spark that remembers",
-                        "It was never born",
-                        "And will never die,",
-                        "",
-                        "Only change costumes,",
-                        "Exchange one mask",
-                        "For another,",
-                        "",
-                        "While the actor remains,",
-                        "Watching the performance",
-                        "Of being human."
-                    ],
-                    date: "JUL 24",
-                    theme: "Eternal"
-                },
-                {
-                    id: 9,
-                    title: "PRAYER WITHOUT GOD",
-                    lines: [
-                        "Not to any deity,",
-                        "But to the silence",
-                        "Between heartbeats,",
-                        "",
-                        "To the space",
-                        "That holds everything",
-                        "And nothing,",
-                        "",
-                        "This sacred attention",
-                        "To the ordinary miracle",
-                        "Of being here at all,",
-                        "",
-                        "This gratitude",
-                        "For the temporary gift",
-                        "Of awareness."
-                    ],
-                    date: "AUG 24",
-                    theme: "Transcendence"
-                }
-            ]
-        };
+        // Initial Poems Database
+        let poems = [
+            {
+                id: 1,
+                title: "The Prodigal's Return",
+                category: "redemption",
+                reference: "Luke 15:11-32",
+                content: `The road was long and full of dust,
+My memories of home now rust,
+The coins were gone, the friends were few,
+And in the pigpen, I finally knew.
 
-        // State
-        let currentSection = 'me';
-        let currentPoemIndex = 0;
-        let currentLine = 0;
-        let isTyping = false;
-        let isPlaying = true;
-        let typingSpeed = 60;
-        let timeoutId;
+My father's house had bread to spare,
+While I was dying in despair,
+So I arose with trembling fear,
+To face the judgment I held dear.
+
+But oh, the sight that met my eyes!
+My father running, love's surprise,
+No condemnation, only grace,
+A warm and tearful embrace.
+
+The robe, the ring, the fatted calf,
+To celebrate this broken half,
+Now made complete in mercy's stream,
+Redeemed beyond my wildest dream.`,
+                imageUrl: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 2,
+                title: "Grace Like Rain",
+                category: "grace",
+                reference: "Ephesians 2:8-9",
+                content: `It falls on just and unjust ground,
+This grace in which we all are drowned,
+Not earned by work or bought with price,
+But given once for all through Christ.
+
+It washes clean the deepest stain,
+Renews what's broken, heals the pain,
+A flood of mercy, wide and deep,
+To wake the soul from sinful sleep.
+
+Oh sweet the sound of falling grace,
+That meets me in this barren place,
+And makes the desert bloom again,
+With life that flows from heaven's rain.`,
+                imageUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 3,
+                title: "The Anchor Holds",
+                category: "faith",
+                reference: "Hebrews 6:19",
+                content: `When storms arise and waves crash high,
+When all I see is threatening sky,
+When strength is gone and hope seems lost,
+I count the overwhelming cost.
+
+But deep beneath the raging sea,
+An anchor holds securely for me,
+Not in the sand or shifting ground,
+But where true faithfulness is found.
+
+Though winds may blow and currents shift,
+This promise is my precious gift:
+The anchor holds, the chain is strong,
+In Christ, my hope, my life, my song.`,
+                imageUrl: "https://images.unsplash.com/photo-1519861531473-4c9c0eae7c6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 4,
+                title: "Morning Mercies",
+                category: "hope",
+                reference: "Lamentations 3:22-23",
+                content: `The night was long, the darkness deep,
+With shadows that made my soul weep,
+But as the first light touched the sky,
+I heard a gentle, tender sigh.
+
+Not from the wind or waking birds,
+But from the living, holy words,
+That whisper through the breaking dawn:
+"New mercies every morning drawn."
+
+The sun may rise or clouds may grey,
+His faithfulness will find its way,
+To meet me in my deepest need,
+With living bread on which to feed.
+
+So let the night be what it will,
+My hope in Christ is living still,
+For with the morning comes the grace,
+To run again this earthly race.`,
+                imageUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 5,
+                title: "The Greatest of These",
+                category: "love",
+                reference: "1 Corinthians 13:13",
+                content: `Not in the tongues of angels sweet,
+Nor prophecy's complete,
+Not faith to move the mountains tall,
+Nor giving up my all.
+
+For these may fade or pass away,
+But love will always stay,
+This patient, kind, and humble art,
+That heals the broken heart.
+
+It bears, believes, and hopes, endures,
+A cure that always cures,
+The greatest gift from heaven above,
+Reflecting God's own love.
+
+So let me seek this better way,
+Today and every day,
+To love as I have first been loved,
+By God who reigns above.`,
+                imageUrl: "https://images.unsplash.com/photo-1536922246289-88c42f957773?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            }
+        ];
 
         // DOM Elements
         const poemList = document.getElementById('poemList');
-        const typewriter = document.getElementById('typewriter');
-        const path = document.getElementById('path');
-        const currentPoemTitle = document.getElementById('currentPoemTitle');
-        const currentDate = document.getElementById('currentDate');
-        const totalPoems = document.getElementById('totalPoems');
-        const totalLines = document.getElementById('totalLines');
-        const currentSectionEl = document.getElementById('currentSection');
-        
-        const navItems = document.querySelectorAll('.nav-item');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const playBtn = document.getElementById('playBtn');
-        const pauseBtn = document.getElementById('pauseBtn');
-        const speedBtn = document.getElementById('speedBtn');
+        const displayTitle = document.getElementById('displayTitle');
+        const displayReference = document.getElementById('displayReference');
+        const poemContent = document.getElementById('poemContent');
+        const poemImage = document.getElementById('poemImage');
+        const poemCount = document.getElementById('poemCount');
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const poemForm = document.getElementById('poemForm');
+        const addPoemForm = document.getElementById('addPoemForm');
+
+        let currentCategory = 'redemption';
 
         // Initialize
         function init() {
-            updateStats();
-            loadSection('me');
-            updateNav('me');
-            loadCurrentPoem();
+            updatePoemCount();
+            loadCategory('redemption');
+            setupEventListeners();
         }
 
-        // Load a section (ME, MYSELF, I)
-        function loadSection(section) {
-            currentSection = section;
-            currentPoemIndex = 0;
-            
-            // Update path
-            path.textContent = `/${section}/`;
-            currentSectionEl.textContent = section.toUpperCase();
-            
-            // Update stats
-            updateStats();
-            
-            // Load poem list
-            renderPoemList();
-            
-            // Load first poem
-            loadCurrentPoem();
+        // Update poem count
+        function updatePoemCount() {
+            poemCount.textContent = poems.length;
         }
 
-        // Update statistics
-        function updateStats() {
-            const poems = poetryArchive[currentSection];
-            totalPoems.textContent = poems.length;
+        // Load poems by category
+        function loadCategory(category) {
+            currentCategory = category;
             
-            // Calculate total lines
-            const lines = poems.reduce((total, poem) => total + poem.lines.length, 0);
-            totalLines.textContent = lines;
+            // Update active nav button
+            navBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filter poems by category
+            const filteredPoems = poems.filter(poem => poem.category === category);
+            
+            // Render poem list
+            renderPoemList(filteredPoems);
+            
+            // Load first poem if available
+            if (filteredPoems.length > 0) {
+                displayPoem(filteredPoems[0]);
+            } else {
+                displayNoPoems();
+            }
         }
 
         // Render poem list
-        function renderPoemList() {
+        function renderPoemList(poemArray) {
             poemList.innerHTML = '';
-            const poems = poetryArchive[currentSection];
             
-            poems.forEach((poem, index) => {
-                const div = document.createElement('div');
-                div.className = `poem-item ${index === currentPoemIndex ? 'active' : ''}`;
-                div.innerHTML = `
-                    <div class="poem-title">${poem.title}</div>
-                    <div class="poem-meta">
-                        <span>${poem.date}</span>
-                        <span>${poem.theme}</span>
-                    </div>
-                `;
-                div.addEventListener('click', () => {
-                    if (isTyping) return;
-                    currentPoemIndex = index;
-                    updateActivePoem();
-                    loadCurrentPoem();
-                });
-                poemList.appendChild(div);
-            });
-        }
-
-        function updateActivePoem() {
-            document.querySelectorAll('.poem-item').forEach((item, index) => {
-                item.classList.toggle('active', index === currentPoemIndex);
-            });
-        }
-
-        // Load current poem
-        function loadCurrentPoem() {
-            const poem = poetryArchive[currentSection][currentPoemIndex];
-            
-            // Update header
-            currentPoemTitle.textContent = poem.title;
-            currentDate.textContent = poem.date;
-            
-            // Start typing
-            startTyping();
-        }
-
-        // Typewriter functions
-        function startTyping() {
-            clearTypewriter();
-            currentLine = 0;
-            isTyping = true;
-            isPlaying = true;
-            updatePlayButtons();
-            typeLine();
-        }
-
-        function clearTypewriter() {
-            typewriter.innerHTML = '';
-            clearTimeout(timeoutId);
-            isTyping = false;
-        }
-
-        function typeLine() {
-            const poem = poetryArchive[currentSection][currentPoemIndex];
-            
-            if (currentLine >= poem.lines.length) {
-                isTyping = false;
-                if (isPlaying) {
-                    timeoutId = setTimeout(() => {
-                        if (isPlaying) nextPoem();
-                    }, 3000);
-                }
+            if (poemArray.length === 0) {
+                poemList.innerHTML = '<div style="color: #666; text-align: center; padding: 20px;">No poems in this category yet</div>';
                 return;
             }
-
-            const line = poem.lines[currentLine];
-            const lineElement = document.createElement('div');
-            lineElement.className = 'line';
-            typewriter.appendChild(lineElement);
-
-            let charIndex = 0;
             
-            const typeChar = () => {
-                if (!isPlaying || !isTyping) return;
+            poemArray.forEach(poem => {
+                const li = document.createElement('li');
+                li.className = 'poem-item';
+                li.innerHTML = `
+                    <div class="poem-item-title">${poem.title}</div>
+                    <div class="poem-item-meta">${poem.reference || 'No reference'}</div>
+                `;
                 
-                if (charIndex < line.length) {
-                    lineElement.textContent += line.charAt(charIndex);
-                    charIndex++;
-                    timeoutId = setTimeout(typeChar, typingSpeed);
-                } else {
-                    currentLine++;
-                    timeoutId = setTimeout(typeLine, line === "" ? 400 : 800);
-                }
+                li.addEventListener('click', () => {
+                    // Remove active class from all items
+                    document.querySelectorAll('.poem-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked item
+                    li.classList.add('active');
+                    
+                    // Display the poem
+                    displayPoem(poem);
+                });
+                
+                poemList.appendChild(li);
+            });
+            
+            // Activate first item
+            if (poemList.firstChild) {
+                poemList.firstChild.classList.add('active');
+            }
+        }
+
+        // Display a poem
+        function displayPoem(poem) {
+            displayTitle.textContent = poem.title;
+            displayReference.textContent = poem.reference ? `Inspired by ${poem.reference}` : '';
+            
+            // Format poem content with stanzas
+            const formattedContent = poem.content.split('\n\n')
+                .map(stanza => `<div class="poem-stanza">${stanza.replace(/\n/g, '<br>')}</div>`)
+                .join('');
+            
+            poemContent.innerHTML = formattedContent;
+            
+            // Display image
+            if (poem.imageUrl) {
+                poemImage.innerHTML = `<img src="${poem.imageUrl}" alt="${poem.title}">`;
+            } else {
+                // Default angel/cross image based on category
+                const defaultImages = {
+                    redemption: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    grace: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    faith: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    hope: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    love: 'https://images.unsplash.com/photo-1536922246289-88c42f957773?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                };
+                
+                poemImage.innerHTML = `<img src="${defaultImages[poem.category]}" alt="${poem.title}">`;
+            }
+        }
+
+        // Display when no poems
+        function displayNoPoems() {
+            displayTitle.textContent = 'No Poems Yet';
+            displayReference.textContent = '';
+            poemContent.innerHTML = '<div style="text-align: center; color: #666; padding: 40px;">Add your first poem using the form below.</div>';
+            poemImage.innerHTML = `
+                <div class="image-placeholder">
+                    <i class="fas fa-feather-alt"></i>
+                    Write your first poem
+                </div>
+            `;
+        }
+
+        // Add new poem
+        function addNewPoem(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('poemTitle').value;
+            const category = document.getElementById('poemCategory').value;
+            const reference = document.getElementById('poemReference').value;
+            const content = document.getElementById('poemContentInput').value;
+            const imageUrl = document.getElementById('poemImageUrl').value;
+            
+            // Create new poem object
+            const newPoem = {
+                id: poems.length + 1,
+                title: title,
+                category: category,
+                reference: reference || null,
+                content: content,
+                imageUrl: imageUrl || null
             };
             
-            typeChar();
-        }
-
-        // Navigation
-        function nextPoem() {
-            const poems = poetryArchive[currentSection];
-            currentPoemIndex = (currentPoemIndex + 1) % poems.length;
-            updateActivePoem();
-            loadCurrentPoem();
-        }
-
-        function prevPoem() {
-            const poems = poetryArchive[currentSection];
-            currentPoemIndex = (currentPoemIndex - 1 + poems.length) % poems.length;
-            updateActivePoem();
-            loadCurrentPoem();
-        }
-
-        // Update navigation
-        function updateNav(section) {
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.dataset.section === section) {
-                    item.classList.add('active');
-                }
-            });
-        }
-
-        // Play/pause
-        function togglePlay() {
-            isPlaying = !isPlaying;
-            updatePlayButtons();
+            // Add to poems array
+            poems.push(newPoem);
             
-            if (isPlaying && !isTyping) {
-                if (currentLine >= poetryArchive[currentSection][currentPoemIndex].lines.length) {
-                    nextPoem();
-                } else {
-                    isTyping = true;
-                    typeLine();
-                }
-            }
-        }
-
-        function updatePlayButtons() {
-            playBtn.classList.toggle('active', isPlaying);
-            pauseBtn.classList.toggle('active', !isPlaying);
-        }
-
-        function pausePlayback() {
-            isPlaying = false;
-            updatePlayButtons();
-        }
-
-        // Speed control
-        function cycleSpeed() {
-            const speeds = [
-                {label: "SLOW", value: 80},
-                {label: "NORMAL", value: 60},
-                {label: "FAST", value: 40},
-                {label: "INSTANT", value: 0}
-            ];
+            // Update UI
+            updatePoemCount();
             
-            const currentIndex = speeds.findIndex(s => s.value === typingSpeed);
-            const nextIndex = (currentIndex + 1) % speeds.length;
-            typingSpeed = speeds[nextIndex].value;
-            speedBtn.textContent = speeds[nextIndex].label;
+            // If this poem is in the current category, refresh the list
+            if (category === currentCategory) {
+                loadCategory(currentCategory);
+            }
+            
+            // Display the new poem
+            displayPoem(newPoem);
+            
+            // Reset form
+            poemForm.reset();
+            
+            // Show success message
+            alert('Poem added successfully!');
         }
 
-        // Event Listeners
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                pausePlayback();
-                const section = item.dataset.section;
-                updateNav(section);
-                loadSection(section);
+        // Setup event listeners
+        function setupEventListeners() {
+            // Navigation buttons
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    loadCategory(btn.dataset.category);
+                });
             });
-        });
+            
+            // Add poem form
+            poemForm.addEventListener('submit', addNewPoem);
+        }
 
-        prevBtn.addEventListener('click', () => {
-            pausePlayback();
-            prevPoem();
-        });
-
-        nextBtn.addEventListener('click', () => {
-            pausePlayback();
-            nextPoem();
-        });
-
-        playBtn.addEventListener('click', togglePlay);
-        pauseBtn.addEventListener('click', pausePlayback);
-        speedBtn.addEventListener('click', cycleSpeed);
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            switch(e.key) {
-                case 'ArrowRight':
-                    pausePlayback();
-                    nextPoem();
-                    break;
-                case 'ArrowLeft':
-                    pausePlayback();
-                    prevPoem();
-                    break;
-                case ' ':
-                    e.preventDefault();
-                    togglePlay();
-                    break;
-                case '1':
-                    pausePlayback();
-                    updateNav('me');
-                    loadSection('me');
-                    break;
-                case '2':
-                    pausePlayback();
-                    updateNav('myself');
-                    loadSection('myself');
-                    break;
-                case '3':
-                    pausePlayback();
-                    updateNav('i');
-                    loadSection('i');
-                    break;
-            }
-        });
-
-        // Initialize
+        // Initialize the application
         init();
     </script>
 </body>
