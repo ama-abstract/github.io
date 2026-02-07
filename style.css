@@ -18,9 +18,15 @@ header {
   margin-bottom: 3rem;
 }
 
+
+.gallery img {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
 .column {
   float: left;
-  width: 25%;
+  width: 33.33%;
 }
 
 /* Clear floats after the columns */
@@ -28,9 +34,4 @@ header {
   content: "";
   display: table;
   clear: both;
-}
-
-.gallery img {
-  width: 100%;
-  margin-bottom: 2rem;
 }
