@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poetry Mind Map</title>
+    <title>Three Columns Layout</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -12,279 +12,199 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', system-ui, sans-serif;
         }
-        
+
         body {
-            background-color: #fafafa;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
             min-height: 100vh;
-            overflow-x: hidden;
+            padding: 20px;
         }
-        
+
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
-        
+
         header {
             text-align: center;
-            padding: 30px 0 40px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            padding: 20px;
         }
-        
+
         h1 {
-            font-weight: 300;
-            font-size: 2.8rem;
-            letter-spacing: -0.5px;
-            color: #222;
+            font-size: 2.5rem;
+            color: #2c3e50;
             margin-bottom: 10px;
+            font-weight: 600;
         }
-        
+
         .subtitle {
             font-size: 1.1rem;
-            color: #777;
-            font-weight: 400;
+            color: #7f8c8d;
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.6;
         }
-        
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
-            flex-wrap: wrap;
+
+        .columns-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
         }
-        
-        .btn {
-            padding: 10px 20px;
+
+        .column {
             background: white;
-            border: 1px solid #ddd;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            color: #555;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn:hover {
-            background-color: #f0f0f0;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-        }
-        
-        .btn.active {
-            background-color: #222;
-            color: white;
-            border-color: #222;
-        }
-        
-        .mindmap-container {
-            position: relative;
-            width: 100%;
-            height: 75vh;
-            min-height: 600px;
-            background-color: white;
             border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
-            overflow: hidden;
-        }
-        
-        .node {
-            position: absolute;
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            height: 100%;
+        }
+
+        .column:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .column-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 50%;
+            display: flex;
             align-items: center;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            z-index: 10;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .node:hover {
-            transform: scale(1.05);
-            z-index: 100;
-        }
-        
-        .node.active {
-            transform: scale(1.1);
-            z-index: 200;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .node-title {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 8px;
+            justify-content: center;
+            margin-bottom: 25px;
             color: white;
-        }
-        
-        .node-theme {
-            font-size: 0.85rem;
-            opacity: 0.9;
-            color: rgba(255, 255, 255, 0.9);
-        }
-        
-        .connection {
-            position: absolute;
-            height: 2px;
-            background-color: rgba(0, 0, 0, 0.08);
-            transform-origin: 0 0;
-            z-index: 1;
-        }
-        
-        .poem-detail {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 380px;
-            height: 100%;
-            background-color: white;
-            padding: 40px 30px;
-            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.03);
-            transform: translateX(100%);
-            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-        
-        .poem-detail.active {
-            transform: translateX(0);
-        }
-        
-        .close-detail {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
             font-size: 1.5rem;
-            color: #999;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s ease;
         }
-        
-        .close-detail:hover {
-            background-color: #f5f5f5;
-            color: #333;
+
+        .column-2 .column-icon {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
         }
-        
-        .poem-title {
+
+        .column-3 .column-icon {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .column h2 {
             font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 10px;
-            color: #222;
-            line-height: 1.3;
-        }
-        
-        .poem-theme {
-            display: inline-block;
-            font-size: 0.9rem;
-            background-color: #f5f5f5;
-            padding: 5px 12px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            color: #666;
-        }
-        
-        .poem-content {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: #444;
-            white-space: pre-line;
-            margin-bottom: 30px;
-        }
-        
-        .poem-meta {
-            font-size: 0.9rem;
-            color: #888;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-        }
-        
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: #aaa;
-            text-align: center;
-            padding: 0 40px;
-        }
-        
-        .empty-state i {
-            font-size: 3rem;
+            color: #2c3e50;
             margin-bottom: 20px;
-            opacity: 0.5;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+            font-weight: 600;
         }
-        
-        .empty-state h3 {
-            font-weight: 400;
+
+        .column p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .column ul, .column ol {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .column li {
             margin-bottom: 10px;
-            color: #777;
+            line-height: 1.6;
+            color: #555;
         }
-        
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            color: #999;
+
+        .column-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+            color: #7f8c8d;
             font-size: 0.9rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            font-style: italic;
+        }
+
+        .cta-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             margin-top: 40px;
         }
-        
-        @media (max-width: 1100px) {
-            .poem-detail {
-                width: 100%;
-                height: 50vh;
-                bottom: 0;
-                top: auto;
-                transform: translateY(100%);
+
+        .cta-section h2 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            color: #7f8c8d;
+            border-top: 1px solid #dfe6e9;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .columns-container {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .poem-detail.active {
-                transform: translateY(0);
-            }
-            
-            .mindmap-container {
-                height: 60vh;
+            .column:nth-child(3) {
+                grid-column: span 2;
             }
         }
-        
+
         @media (max-width: 768px) {
+            .columns-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .column:nth-child(3) {
+                grid-column: span 1;
+            }
+            
             h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
             
-            .controls {
-                gap: 10px;
-            }
-            
-            .btn {
-                padding: 8px 16px;
-                font-size: 0.9rem;
-            }
-            
-            .node {
-                width: 130px;
-                height: 130px;
+            .column {
+                padding: 25px;
             }
         }
     </style>
@@ -292,398 +212,119 @@
 <body>
     <div class="container">
         <header>
-            <h1>Poetry Mind Map</h1>
-            <p class="subtitle">An interactive visualization of my poetry collection. Click on any poem node to explore its content and themes.</p>
-            
-            <div class="controls">
-                <button class="btn active" id="btn-all">
-                    <i class="fas fa-globe"></i> All Poems
-                </button>
-                <button class="btn" id="btn-love">
-                    <i class="fas fa-heart"></i> Love & Relationships
-                </button>
-                <button class="btn" id="btn-nature">
-                    <i class="fas fa-leaf"></i> Nature
-                </button>
-                <button class="btn" id="btn-existential">
-                    <i class="fas fa-question-circle"></i> Existential
-                </button>
-                <button class="btn" id="btn-melancholy">
-                    <i class="fas fa-cloud"></i> Melancholy
-                </button>
-                <button class="btn" id="btn-reset">
-                    <i class="fas fa-sync-alt"></i> Reset View
-                </button>
-            </div>
+            <h1>Three Columns Layout</h1>
+            <p class="subtitle">A clean, responsive three-column design with headings, text content, and visual elements. Perfect for presenting information in an organized manner.</p>
         </header>
-        
-        <div class="mindmap-container" id="mindmap">
-            <!-- Nodes will be generated by JavaScript -->
-            <div class="empty-state" id="empty-state">
-                <i class="fas fa-spinner fa-spin"></i>
-                <h3>Loading Poetry Mind Map</h3>
-                <p>Connecting poems and themes...</p>
+
+        <main>
+            <div class="columns-container">
+                <!-- Column 1 -->
+                <div class="column column-1">
+                    <div class="column-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h2>Creative Ideas</h2>
+                    <p>This column showcases innovative thinking and creative approaches to problem-solving. The content focuses on generating fresh perspectives and thinking outside conventional boundaries.</p>
+                    <p>We explore how creativity can be cultivated through various techniques like brainstorming, mind mapping, and free association. These methods help unlock new possibilities in any field.</p>
+                    <ul>
+                        <li>Innovative thinking methodologies</li>
+                        <li>Creative problem-solving techniques</li>
+                        <li>Ideation workshops and practices</li>
+                        <li>Overcoming creative blocks</li>
+                    </ul>
+                    <div class="column-footer">
+                        Updated: March 2023 | 5 min read
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="column column-2">
+                    <div class="column-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h2>Strategic Planning</h2>
+                    <p>Strategic planning involves setting goals, determining actions to achieve those goals, and mobilizing resources to execute the actions. This column examines effective planning methodologies.</p>
+                    <p>We discuss various frameworks for strategic development, including SWOT analysis, PEST analysis, and balanced scorecards. Each approach offers unique insights for organizational success.</p>
+                    <ol>
+                        <li>Define vision and mission</li>
+                        <li>Conduct environmental analysis</li>
+                        <li>Set strategic objectives</li>
+                        <li>Develop action plans</li>
+                        <li>Monitor and adjust strategies</li>
+                    </ol>
+                    <div class="column-footer">
+                        Updated: April 2023 | 7 min read
+                    </div>
+                </div>
+
+                <!-- Column 3 -->
+                <div class="column column-3">
+                    <div class="column-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h2>Team Collaboration</h2>
+                    <p>Effective collaboration is essential for achieving complex goals. This column explores techniques for fostering teamwork, communication, and synergy among diverse team members.</p>
+                    <p>We examine how digital tools, communication protocols, and team-building activities can enhance collaboration. The focus is on creating environments where collective intelligence thrives.</p>
+                    <p>Key aspects include establishing clear roles and responsibilities, creating psychological safety, and implementing effective feedback mechanisms. These elements contribute to high-performing teams.</p>
+                    <p>Remote collaboration tools and techniques have become increasingly important in today's distributed work environments, requiring new approaches to maintain connection and productivity.</p>
+                    <div class="column-footer">
+                        Updated: May 2023 | 8 min read
+                    </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="poem-detail" id="poem-detail">
-            <button class="close-detail" id="close-detail">
-                <i class="fas fa-times"></i>
-            </button>
-            <div id="detail-content">
-                <!-- Poem details will be loaded here -->
+
+            <div class="cta-section">
+                <h2>Ready to Learn More?</h2>
+                <p>This three-column layout demonstrates how content can be organized in a clean, accessible format. Each column focuses on a specific theme with supporting details and examples.</p>
+                <button class="btn">Explore More Content</button>
             </div>
-        </div>
-        
+        </main>
+
         <footer>
-            <p>A minimalist interface for exploring poetry • Created with HTML, CSS & JavaScript</p>
+            <p>Three Columns Layout &copy; 2023 | Designed with responsive principles</p>
+            <p style="margin-top: 10px;">Resize your browser to see how the columns adapt to different screen sizes</p>
         </footer>
     </div>
 
     <script>
-        // Sample poetry data
-        const poems = [
-            {
-                id: 1,
-                title: "Silent Whispers",
-                theme: "melancholy",
-                color: "#5D737E",
-                content: `The quiet speaks in volumes unheard,
-In the space between words,
-A language of shadows and light,
-Speaking softly through the night.
-
-What is said without a sound?
-Echoes in the void are found,
-A whisper in the empty air,
-A presence felt, but not there.`,
-                date: "March 2023",
-                inspiration: "Inspired by moments of solitude"
-            },
-            {
-                id: 2,
-                title: "Eternal Bloom",
-                theme: "nature",
-                color: "#7FC29B",
-                content: `Petals unfold to morning's kiss,
-A transient, timeless bliss,
-Roots reaching deep in earth's embrace,
-Finding their quiet, steady place.
-
-Seasons turn and colors fade,
-But in the soil, plans are laid,
-For spring will come with gentle rain,
-And life will rise and bloom again.`,
-                date: "April 2023",
-                inspiration: "Observing the resilience of spring flowers"
-            },
-            {
-                id: 3,
-                title: "Unspoken Words",
-                theme: "love",
-                color: "#DB5461",
-                content: `All the things I never said,
-Echo inside my head,
-A symphony of silent thought,
-Battles fought but never fought.
-
-Your eyes held galaxies untold,
-Stories that would never unfold,
-And in the quiet between our sighs,
-A universe of love still lies.`,
-                date: "February 2023",
-                inspiration: "Reflections on unexpressed feelings"
-            },
-            {
-                id: 4,
-                title: "Cosmic Dust",
-                theme: "existential",
-                color: "#6867AC",
-                content: `We are stardust, ancient, old,
-Stories in the cosmos told,
-Tiny specks in vast expanse,
-Given just a fleeting chance.
-
-To love, to fear, to hope, to dream,
-In the universal stream,
-Finding meaning in the void,
-Where all is lost and all employed.`,
-                date: "January 2023",
-                inspiration: "Contemplating our place in the universe"
-            },
-            {
-                id: 5,
-                title: "Urban Rain",
-                theme: "melancholy",
-                color: "#5D737E",
-                content: `City lights in puddles gleam,
-Reflections of a fractured dream,
-Raindrops trace on window panes,
-Mapping out forgotten lanes.
-
-The rhythm of the falling rain,
-Eases urban aches and pain,
-Washing clean the soot and grime,
-For just a little while, a time.`,
-                date: "December 2022",
-                inspiration: "A rainy evening in the city"
-            },
-            {
-                id: 6,
-                title: "Ocean's Breath",
-                theme: "nature",
-                color: "#7FC29B",
-                content: `Salt and foam and endless blue,
-Horizon where the sky meets you,
-Waves that crash then softly sigh,
-As gulls and clouds go sailing by.
-
-The ocean holds a ancient song,
-Of where we all once did belong,
-In rhythms of the tide and swell,
-Stories that the seas will tell.`,
-                date: "November 2022",
-                inspiration: "Walking along the coast at dawn"
-            },
-            {
-                id: 7,
-                title: "Fragile Trust",
-                theme: "love",
-                color: "#DB5461",
-                content: `Built like glass, transparent, thin,
-A careful space to let you in,
-Each crack a story, each flaw a fear,
-Yet holding you ever near.
-
-To trust is both to break and mend,
-On this our fragile hearts depend,
-To be both shield and vulnerability,
-In this dance of you and me.`,
-                date: "October 2022",
-                inspiration: "On building and maintaining trust"
-            },
-            {
-                id: 8,
-                title: "Questions at 3 AM",
-                theme: "existential",
-                color: "#6867AC",
-                content: `In the stillness of the night,
-When darkness swallows up the light,
-Questions come without replies,
-Underneath the starry skies.
-
-Why are we here? What does it mean?
-In the spaces in between,
-The waking world and dreams that flee,
-Is there something we're meant to see?`,
-                date: "September 2022",
-                inspiration: "Late-night philosophical wondering"
-            }
-        ];
-
-        // Theme colors mapping
-        const themeColors = {
-            "love": "#DB5461",
-            "nature": "#7FC29B",
-            "existential": "#6867AC",
-            "melancholy": "#5D737E"
+        // Simple interactivity for the CTA button
+        document.querySelector('.btn').addEventListener('click', function() {
+            alert('Thanks for your interest! This is a demonstration layout.');
+        });
+        
+        // Add subtle animation to columns when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         };
-
-        // DOM elements
-        const mindmapContainer = document.getElementById('mindmap');
-        const poemDetail = document.getElementById('poem-detail');
-        const detailContent = document.getElementById('detail-content');
-        const closeDetailBtn = document.getElementById('close-detail');
-        const emptyState = document.getElementById('empty-state');
-        const filterButtons = document.querySelectorAll('.btn:not(#btn-reset)');
-        const resetButton = document.getElementById('btn-reset');
-
-        // State variables
-        let activeFilter = 'all';
-        let nodes = [];
-        let connections = [];
-
-        // Initialize the mind map
-        function initMindMap() {
-            emptyState.style.display = 'none';
-            mindmapContainer.innerHTML = '';
-            nodes = [];
-            connections = [];
-            
-            // Filter poems based on active filter
-            let filteredPoems = poems;
-            if (activeFilter !== 'all') {
-                filteredPoems = poems.filter(poem => poem.theme === activeFilter);
-            }
-            
-            // Create nodes for each poem
-            filteredPoems.forEach((poem, index) => {
-                createPoemNode(poem, index, filteredPoems.length);
-            });
-            
-            // Create connections between related poems (by theme)
-            createConnections();
-        }
-
-        // Create a poem node
-        function createPoemNode(poem, index, total) {
-            const node = document.createElement('div');
-            node.className = 'node';
-            node.id = `node-${poem.id}`;
-            
-            // Calculate position in a circular layout
-            const radius = Math.min(mindmapContainer.offsetWidth, mindmapContainer.offsetHeight) * 0.3;
-            const centerX = mindmapContainer.offsetWidth / 2;
-            const centerY = mindmapContainer.offsetHeight / 2;
-            const angle = (index / total) * 2 * Math.PI;
-            
-            const x = centerX + radius * Math.cos(angle) - 80;
-            const y = centerY + radius * Math.sin(angle) - 80;
-            
-            node.style.left = `${x}px`;
-            node.style.top = `${y}px`;
-            node.style.backgroundColor = poem.color;
-            node.style.boxShadow = `0 8px 25px ${hexToRgba(poem.color, 0.3)}`;
-            
-            node.innerHTML = `
-                <div class="node-title">${poem.title}</div>
-                <div class="node-theme">${formatTheme(poem.theme)}</div>
-                <div class="node-date" style="font-size:0.75rem; margin-top:5px; opacity:0.8">${poem.date}</div>
-            `;
-            
-            // Add click event
-            node.addEventListener('click', () => showPoemDetail(poem));
-            
-            mindmapContainer.appendChild(node);
-            nodes.push({
-                element: node,
-                poem: poem,
-                x: x + 80, // Center of node
-                y: y + 80  // Center of node
-            });
-        }
-
-        // Create connections between nodes of the same theme
-        function createConnections() {
-            // Group nodes by theme
-            const themeGroups = {};
-            nodes.forEach(node => {
-                if (!themeGroups[node.poem.theme]) {
-                    themeGroups[node.poem.theme] = [];
-                }
-                themeGroups[node.poem.theme].push(node);
-            });
-            
-            // Create connections within each theme group
-            Object.values(themeGroups).forEach(group => {
-                if (group.length > 1) {
-                    for (let i = 0; i < group.length; i++) {
-                        for (let j = i + 1; j < group.length; j++) {
-                            createConnection(group[i], group[j]);
-                        }
-                    }
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }
-
-        // Create a visual connection between two nodes
-        function createConnection(nodeA, nodeB) {
-            const connection = document.createElement('div');
-            connection.className = 'connection';
-            
-            const dx = nodeB.x - nodeA.x;
-            const dy = nodeB.y - nodeA.y;
-            const length = Math.sqrt(dx * dx + dy * dy);
-            const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-            
-            connection.style.width = `${length}px`;
-            connection.style.left = `${nodeA.x}px`;
-            connection.style.top = `${nodeA.y}px`;
-            connection.style.transform = `rotate(${angle}deg)`;
-            connection.style.backgroundColor = hexToRgba(nodeA.poem.color, 0.2);
-            
-            mindmapContainer.appendChild(connection);
-            connections.push(connection);
-        }
-
-        // Show poem detail panel
-        function showPoemDetail(poem) {
-            // Remove active class from all nodes
-            document.querySelectorAll('.node').forEach(node => {
-                node.classList.remove('active');
+        }, observerOptions);
+        
+        // Apply initial styles for animation
+        document.querySelectorAll('.column').forEach((column, index) => {
+            column.style.opacity = '0';
+            column.style.transform = 'translateY(20px)';
+            column.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            column.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(column);
+        });
+        
+        // Add hover effect for column icons
+        document.querySelectorAll('.column-icon').forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                this.style.transform = 'rotate(10deg) scale(1.1)';
             });
             
-            // Add active class to clicked node
-            document.getElementById(`node-${poem.id}`).classList.add('active');
-            
-            // Populate detail panel
-            detailContent.innerHTML = `
-                <h2 class="poem-title">${poem.title}</h2>
-                <div class="poem-theme">${formatTheme(poem.theme)}</div>
-                <div class="poem-content">${poem.content}</div>
-                <div class="poem-meta">
-                    <p><strong>Date:</strong> ${poem.date}</p>
-                    <p><strong>Inspiration:</strong> ${poem.inspiration}</p>
-                </div>
-            `;
-            
-            // Show detail panel
-            poemDetail.classList.add('active');
-        }
-
-        // Helper functions
-        function hexToRgba(hex, alpha) {
-            const r = parseInt(hex.slice(1, 3), 16);
-            const g = parseInt(hex.slice(3, 5), 16);
-            const b = parseInt(hex.slice(5, 7), 16);
-            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-        }
-
-        function formatTheme(theme) {
-            return theme.charAt(0).toUpperCase() + theme.slice(1);
-        }
-
-        // Event listeners for filter buttons
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Update active button
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                
-                // Update filter and reinitialize mind map
-                activeFilter = button.id.replace('btn-', '');
-                initMindMap();
+            icon.addEventListener('mouseleave', function() {
+                this.style.transform = 'rotate(0deg) scale(1)';
             });
-        });
-
-        // Reset button event listener
-        resetButton.addEventListener('click', () => {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            document.getElementById('btn-all').classList.add('active');
-            activeFilter = 'all';
-            initMindMap();
-            poemDetail.classList.remove('active');
-        });
-
-        // Close detail panel
-        closeDetailBtn.addEventListener('click', () => {
-            poemDetail.classList.remove('active');
-            document.querySelectorAll('.node').forEach(node => {
-                node.classList.remove('active');
-            });
-        });
-
-        // Initialize on load
-        window.addEventListener('load', () => {
-            // Small delay to show loading state
-            setTimeout(initMindMap, 800);
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (activeFilter) {
-                initMindMap();
-            }
         });
     </script>
 </body>
