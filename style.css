@@ -13,11 +13,6 @@ header {
 }
 
 
-.gallery img {
-  width: 100%;
-  margin-bottom: 2rem;
-}
-
 .column {
 float: left;
 width: 33.333%;
@@ -28,4 +23,9 @@ width: 33.333%;
 content: "";
 display: table;
 clear: both;
+}
+
+.gallery img {
+  width: 100%;
+  margin-bottom: 2rem;
 }
