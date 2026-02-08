@@ -30,16 +30,11 @@ html, body {
         glow 7s ease-in-out infinite;
 }
 
-@keyframes breathe {
-    0%   { transform: scale(1); }
-    50%  { transform: scale(1.07); }
-    100% { transform: scale(1); }
-}
 
 @keyframes breathe {
-    0%   { transform: scale(1) rotate(-0.3deg); }
-    50%  { transform: scale(1.02) rotate(0.3deg); }
-    100% { transform: scale(1) rotate(-0.3deg); }
+    0%   { transform: scale(1) rotate(-0.7deg); }
+    50%  { transform: scale(1.04) rotate(0.7deg); }
+    100% { transform: scale(1) rotate(-0.7deg); }
 }
 
 @keyframes glow {
