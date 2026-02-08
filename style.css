@@ -1,63 +1,59 @@
-/* General reset */
 * {
     margin: 0;
-    padding: 0; 
+    padding: 0;
     box-sizing: border-box;
 }
 
-body, html {
+html, body {
     height: 100%;
-    font-family: 'Arial', sans-serif;
+    background: black;
+    font-family: "Garamond", serif;
+    overflow: hidden;
 }
 
-/* Hero section with background image */
-.hero {
-    background-color: black;
-    background-image: url('tumblr_d83b2e6c7f32829eb7607d22f746a2f2_4c29198b_640-removebg-preview.png'); /* Path to your image */
-    background-repeat: no-repeat;
-    background-size: auto;
-    background-position: center;
-    height: 100vh;
+/* Angel screen */
+#angel-screen {
+    position: absolute;
+    inset: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
 }
 
-/* Optional overlay for better text visibility */
-.overlay {
-    background-color: rgba(0, 0, 0, 0.7);
-    width: 100%;
-    height: 100%;
-    color: white;
+#angel {
+    max-height: 85vh;
+    cursor: pointer;
+    transition: opacity 2s ease;
+}
+
+/* Poetry (hidden initially) */
+#poetry-screen {
+    position: absolute;
+    inset: 0;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    gap: 80px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 2s ease;
 }
 
-h1 {
-    margin-bottom: 50px;
-    font-size: 3em;
-}
-
-/* Columns */
-.columns {
-    display: flex;
-    gap: 40px;
-}
-
-.column {
-    padding: 20px 40px;
-    background-color: rgba(255, 255, 255, 0.1);
+#poetry-screen a {
     color: white;
     text-decoration: none;
-    font-size: 1.5em;
-    transition: background 0.3s, transform 0.3s;
+    font-size: 2.2em;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: rise 2s ease forwards;
 }
 
-.column:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
+#poetry-screen a:nth-child(2) { animation-delay: 0.4s; }
+#poetry-screen a:nth-child(3) { animation-delay: 0.8s; }
+
+@keyframes rise {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
