@@ -26,8 +26,8 @@ html, body {
     transition: opacity 2s ease;
 
     animation:
-        breathe 4s ease-in-out infinite,
-        glow 8s ease-in-out infinite;
+        breathe 9s ease-in-out infinite,
+        glow 9s ease-in-out infinite;
 }
 
 @keyframes breathe {
