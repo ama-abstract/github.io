@@ -27,7 +27,7 @@ html, body {
 
     animation:
         breathe 8s ease-in-out infinite,
-        glow 7s ease-in-out infinite;
+        glow 10s ease-in-out infinite;
 }
 
 @keyframes breathe {
