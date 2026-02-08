@@ -21,7 +21,7 @@ html, body {
 }
 
 #angel {
-    max-height: 85vh;
+    max-height: 200vh;
     cursor: pointer;
     transition: opacity 2s ease;
 
