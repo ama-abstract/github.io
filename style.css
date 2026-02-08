@@ -21,18 +21,18 @@ html, body {
 }
 
 #angel {
-    max-height: 200vh;
+    max-height: 88vh;
     cursor: pointer;
     transition: opacity 2s ease;
 
     animation:
-        breathe 9s ease-in-out infinite,
-        glow 9s ease-in-out infinite;
+        breathe 8s ease-in-out infinite,
+        glow 7s ease-in-out infinite;
 }
 
 @keyframes breathe {
     0%   { transform: scale(1); }
-    50%  { transform: scale(1.015); }
+    50%  { transform: scale(1.07); }
     100% { transform: scale(1); }
 }
 
