@@ -1,127 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap');
-
+/* General reset */
 * {
-  margin: 0; 
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body {
-  background: #000;
-  color: #f5f5f5;
-  font-family: 'Cormorant Garamond', serif;
-  min-height: 100vh;
-  overflow-x: hidden;
+body, html {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
 }
 
-/* THRONES — PURE LIGHT */
-.throne {
-  position: fixed;
-  top: 0;
-  width: 38%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  pointer-events: none;
-  z-index: 0;
-
-  /* FORCE WHITE + CRYSTAL */
-  filter:
-    grayscale(100%)
-    brightness(2.2)
-    contrast(0.7)
-    blur(0.6px)
-    drop-shadow(0 0 25px rgba(255,255,255,0.35));
-
-  opacity: 0.14;
-  mix-blend-mode: screen; /* makes light behave like light */
+/* Hero section with background image */
+.hero {
+    background-color: black;
+    background-image: url('tumblr_d83b2e6c7f32829eb7607d22f746a2f2_4c29198b_640-removebg-preview.png'); /* Path to your image */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
-.throne.left {
-  left: -10%;
-  background-image: url("images/throne-left.png");
+/* Optional overlay for better text visibility */
+.overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
-.throne.center {
-  left: 31%;
-  opacity: 0.1;
-  background-image: url("images/throne-center.png");
+h1 {
+    margin-bottom: 50px;
+    font-size: 3em;
 }
 
-.throne.right {
-  right: -10%;
-  background-image: url("images/throne-right.png");
-}
-
-/* CONTENT */
-header {
-  text-align: center;
-  padding: 4rem 2rem 2rem;
-  position: relative;
-  z-index: 2;
-}
-
-header h1 {
-  font-size: 3rem;
-  letter-spacing: 0.3rem;
-}
-
-.subtitle {
-  color: #cfcfcf;
-  font-style: italic;
-}
-
-/* COLUMNS */
+/* Columns */
 .columns {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3rem;
-  padding: 4rem 6rem;
-  position: relative;
-  z-index: 2;
+    display: flex;
+    gap: 40px;
 }
 
 .column {
-  border-left: 1px solid rgba(255,255,255,0.2);
-  padding-left: 2rem;
+    padding: 20px 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    font-size: 1.5em;
+    transition: background 0.3s, transform 0.3s;
 }
 
-.column.middle {
-  border-left: 1px solid rgba(255,255,255,0.35);
-  border-right: 1px solid rgba(255,255,255,0.35);
-  padding: 0 2rem;
-}
-
-.column h2 {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.column a {
-  color: white;
-  text-decoration: none;
-  transition: 0.3s ease;
-}
-
-.column a:hover {
-  text-shadow:
-    0 0 10px rgba(255,255,255,0.8),
-    0 0 25px rgba(255,255,255,0.4);
-}
-
-.hint {
-  text-align: center;
-  color: #bdbdbd;
-  font-style: italic;
-}
-
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 3rem;
-  color: #9e9e9e;
-  font-style: italic;
-  position: relative;
-  z-index: 2;
+.column:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
 }
