@@ -14,6 +14,7 @@ body, html {
 .hero {
     background-color: black;
     background-image: url('tumblr_d83b2e6c7f32829eb7607d22f746a2f2_4c29198b_640-removebg-preview.png'); /* Path to your image */
+    background-repeat: no-repeat;
     background-size: auto;
     background-position: center;
     height: 100vh;
